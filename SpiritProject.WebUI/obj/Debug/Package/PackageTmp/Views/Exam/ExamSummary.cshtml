@@ -1,0 +1,67 @@
+﻿@{
+    //Layout = "~/Views/Shared/_Login_Exam.cshtml";
+    ViewBag.Title = "ExamSummary";
+    var MaxObj = (SpiritProject.Common.SummaryScoreModel)ViewBag.MaxObj;
+}
+@model List<SpiritProject.Common.SummaryScoreModel>
+
+<div class="content">
+
+
+</div>
+<div class="content">
+
+    <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8">
+            <div class="hpanel hgreen">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <h4>@Resources.Resource.lbl_Summary1 @MaxObj.ExamFullName @Resources.Resource.lbl_Summary2</h4>
+
+                            @*<p>
+                                @Resources.Resource.lbl_Summary3 xxxx
+                            </p>*@
+
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="project-label"><strong>@Resources.Resource.lbl_Total</strong></div>
+                                    <small>@MaxObj.DoneQuestion/@MaxObj.TotalQuestion</small>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="project-label"><strong>@Resources.Resource.lbl_TimeUesd</strong></div>
+                                    <small>@MaxObj.TotalTimeUsed</small>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="project-label"><strong>@Resources.Resource.lbl_CompleteData</strong></div>
+                                    <small>@MaxObj.FinishedDate</small>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-4 project-info">
+                            <div class="project-action m-t-md">
+                                <p>@Resources.Resource.lbl_Complete</p>
+                            </div>
+                            <div class="project-value">
+                                <h2 class="text-success">
+                                    <i class="fa fa-3x fa-check-circle"></i>
+                                </h2>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <div align="center">
+                        <button class="btn btn-primary" onclick="window.location='@Url.Action("Index", "Dashboard")'">@Resources.Resource.btn_Home</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-lg-2"></div>
+
+    </div>
+</div>

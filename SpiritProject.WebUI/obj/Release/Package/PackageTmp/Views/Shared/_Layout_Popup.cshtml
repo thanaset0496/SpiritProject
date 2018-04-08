@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Personality Test</title>
+
+
+    <!-- Add local styles, mostly for plugins css file -->
+    @if (IsSectionDefined("Styles"))
+    {@RenderSection("Styles", required: false)}
+
+    <!-- Primary HOMER style -->
+    @Styles.Render("~/bundles/font-awesome/css")
+    @Styles.Render("~/bundles/bootstrap/css")
+    @Styles.Render("~/bundles/homer/css")
+
+
+</head>
+<body class="blank">
+
+    <div class="splash"> <div class="color-line"></div><div class="splash-title"><h1>Homer - Responsive Admin Theme</h1><p>Special Admin Theme for small and medium webapp with very clean and aesthetic style and feel. </p><div class="spinner"> <div class="rect1"></div> <div class="rect2"></div> <div class="rect3"></div> <div class="rect4"></div> <div class="rect5"></div> </div> </div> </div>
+
+    <div id="header">
+        <div class="color-line"></div>
+        <div id="logo" class="light-version">
+            <span>
+                <img src="~/Content/img/logo.png" style="width:  120px;" />
+            </span>
+        </div>
+    </div>
+    <div id="wrapper">
+        @RenderBody()
+    </div>
+    <!-- Section for main scripts render -->
+    @Scripts.Render("~/bundles/jquery/js")
+    @Scripts.Render("~/bundles/bootstrap/js")
+    @Scripts.Render("~/bundles/homer/js")
+    <!-- Handler for local scripts -->
+    @RenderSection("scripts", required: false)
+    <script>
+        function message(type, msg) {
+            //Toastr options
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": true,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "200",
+                "hideDuration": "500",
+                "timeOut": "2500",
+                "extendedTimeOut": "500",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+
+            if (type.indexOf('info') >= 0) {
+                toastr.info(msg, 'Information');
+            }
+            else if (type.indexOf('warning') >= 0) {
+                toastr.warning(msg, 'Warning');
+            }
+            else if (type.indexOf('error') >= 0) {
+                toastr.error(msg, 'Error');
+            }
+            else {
+                toastr.success(msg, 'Information');
+            }
+        }
+    </script>
+    <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content border">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Alert</h4>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,120 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+}
+@model List<SpiritProject.Common.ExamStatModel>
+
+<div class="content">
+    <div class="row">
+        <div class="col-lg-12 text-center m-t-md">
+            <h2>
+                @Resources.Resource.lbl_welcome
+            </h2>
+            <br />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+        </div>
+    </div>
+    <div class="row">
+
+        @foreach (var exam in Model)
+        {
+
+            var percent = Math.Round(Convert.ToDecimal(exam.Answered) / exam.TotalQuestion * 100, 2);
+
+            <div class="col-lg-3" style="">
+                <div class="hpanel stats">
+                    <div class="panel-body h-200">
+                        <div class="stats-icon pull-right">
+                            @*<i class="pe-7s-share fa-4x"></i>*@
+                            Times @exam.TestNo
+                        </div>
+                        <div class="">
+                            <h3 class="m-b-xs"><strong>@exam.ExamDesc</strong></h3>
+                            <span class="no-margins">
+                                Testing Status
+                            </span>
+                            <div class="text-center">
+                                @if (exam.Status == "2")
+                                {
+                                    <i class="fa fa-4x fa-check-circle text-success"></i>
+                                }
+                                else if (exam.Status == "1")
+                                {
+                                    <i class="fa fa-4x fa-check-circle text-danger"></i>
+
+                                }
+                                else
+                                {
+                                    <i class="fa fa-4x fa-check-circle text-warning"></i>
+
+                                }
+                            </div>
+
+                            <br />
+                            <div class="row">
+                                <div class="col-xs-6" style="">
+                                    <strong class="stats-label">Start Date</strong>
+                                    <p>@exam.DisplayStartDate</p>
+                                </div>
+                                <div class="col-xs-6" style="">
+                                    <strong class="stats-label">Complete Date</strong>
+                                    <p>@exam.DisplayFinishedDate</p>
+                                </div>
+                                @*<div class="col-xs-6" style="">
+                                        <small class="stats-label">% Complete</small>
+                                        <h4><text>@percent</text>%</h4>
+                                    </div>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer" style="background-color:#34495e;color: #c7ddef;height:50px;">
+                        @using (Html.BeginForm("ExamIntro", "Exam", FormMethod.Post, new { id = "DoExamForm", style = "display: block;" }))
+                        {
+
+                            if (exam.Status == "1" || exam.Status == "0")
+                            {
+                                if (exam.MonthDifference <= 6)
+                                {
+                                    <div style="display:inline-block;float:left;"><h4>@Resources.Resource.lbl_chooseLang</h4></div>
+                                    @Html.Hidden("ExamId", (int)exam.ExamId, new { id = "ExamId" })
+                                    @Html.Hidden("TestNo", (int)exam.TestNo, new { id = "TestNo" })
+                                    @Html.Hidden("TotalQuestion", (int)exam.TotalQuestion, new { id = "TotalQuestion" })
+                                    @Html.Hidden("TimeSet", (int)exam.TimeSet, new { id = "TimeSet" })
+                                    @Html.Hidden("lang", (string)ViewBag.lang, new { id = "lang" })
+
+                                    <button class="btn btn-circle small btn-info" type="button" onclick="DoExam('th')">TH</button>
+                                    <button class="btn btn-circle small btn-info" type="button" onclick="DoExam('en')">EN</button>
+
+                                }
+                                else
+                                {
+                                    <h4> <text>Expired</text></h4>
+
+                                }
+                            }
+                            else
+                            {
+                                <h4> <text>Complete</text></h4>
+                            }
+
+                        }
+                    </div>
+                </div>
+            </div>
+
+
+        }
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        function DoExam(lang) {
+            $('#lang').val(lang);
+            $('#DoExamForm').submit();
+        }
+    </script>
+}

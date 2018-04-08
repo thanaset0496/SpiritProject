@@ -1,0 +1,124 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+    ViewBag.Title = "EditQuestion";
+}
+@model SpiritProject.Common.QuestionModel
+
+@using (Html.BeginForm("EditQuestionSubmit", "Admin", FormMethod.Post, new { id = "editQuestionForm" }))
+{
+    <div class="content">
+
+        <div class="question-container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="hpanel">
+
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="form-group col-lg-12">
+                                    <h4>@Resources.Resource.lbl_Question @Model.QuestionId</h4>
+                                    @Html.Hidden("QuestionId", Model.QuestionId, new { id = "QuestionId" })
+                                    <hr />
+                                </div>
+                                <div class="form-group col-lg-12">
+                                    <label>Thai</label>
+                                    <input type="text" value="@Model.DataTH" id="DataTH" class="form-control" name="DataTH">
+                                </div>
+                                <div class="form-group col-lg-12">
+                                    <label>English</label>
+                                    <input type="text" value="@Model.DataEN" id="DataEN" class="form-control" name="DataEN">
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label>Factor TH</label>
+                                    <input type="text" value="@Model.FactorNameTH" id="" class="form-control" name="" readonly="readonly">
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label>Factor EN</label>
+                                    <input type="text" value="@Model.FactorNameEN" id="" class="form-control" name="" readonly="readonly">
+                                </div>
+                                @*<div class="form-group col-lg-6">
+                                    <label>SubFactor TH</label>
+                                    <input type="text" value="@Model.SubFactorNameTH" id="" class="form-control" name="" readonly="readonly">
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label>SubFactor EN</label>
+                                    <input type="text" value="@Model.SubFactorNameEN" id="" class="form-control" name="" readonly="readonly">
+                                </div>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="hpanel">
+                        <div class="panel-body">
+
+                            @for (var i = 0; i < Model.Choice.Count(); i++)
+                            { <div class="form-group col-lg-12">
+
+                                <h4>@Resources.Resource.lbl_Choice @Model.Choice[i].ChoiceId</h4>
+                                <hr />
+                            </div>
+                            <div class="row">
+                                @Html.Hidden("Choice[" + i + "].ChoiceId", Model.Choice[i].ChoiceId, new { id = "Choice[" + i + "].ChoiceId" })
+                                <div class="form-group col-lg-12">
+                                    <label>Thai</label>
+                                    <input type="text" value="@Model.Choice[i].ChoiceNameTH" id="Choice[@i].ChoiceNameTH" class="form-control" name="Choice[@i].ChoiceNameTH">
+                                </div>
+                                <div class="form-group col-lg-12">
+                                    <label>English</label>
+                                    <input type="text" value="@Model.Choice[i].ChoiceNameEN" id="Choice[@i].ChoiceNameEN" class="form-control" name="Choice[@i].ChoiceNameEN">
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label>Type</label>
+                                    <input type="text" value="@Model.Choice[i].ChoiceType" id="" class="form-control" name="" readonly="readonly">
+                                </div>
+                            </div>
+                            }
+
+                            <hr />
+                            <div class="text-center">
+                                <button class="btn btn-success" type="button" data-toggle="modal" data-target="#myModal7">บันทึก</button>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade hmodal-warning" id="myModal7" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="color-line"></div>
+
+                <div class="modal-body">
+                    <h4 class="modal-title">ยืนยันการบันทึก</h4>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                    <button onclick="editQuestionForm()" class="btn btn-primary">บันทึก</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts{
+    <script>
+        function editQuestionForm() {
+
+            $('#editQuestionForm').submit();
+        };
+
+    </script>
+}

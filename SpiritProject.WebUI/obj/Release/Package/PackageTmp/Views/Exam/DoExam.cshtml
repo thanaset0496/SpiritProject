@@ -1,0 +1,428 @@
+﻿
+@model SpiritProject.Common.AnswerSheetModel
+@{
+
+    //Layout = "~/Views/Shared/_Login_Exam.cshtml";
+    var stat = (SpiritProject.Common.ExamStatModel)ViewBag.stat;
+}
+
+@section   Styles{
+    <style type="text/css">
+        .Choicelabel {
+            display: inline-block;
+            max-width: 100%;
+            margin-bottom: 5px;
+            font-weight: 500;
+            vertical-align: middle;
+            padding-left: 20px;
+        }
+
+        .QuestionForm {
+            font-weight: 700;
+            padding: 10px 10px 10px 10px;
+            font-size: 20px;
+        }
+    </style>
+}
+@section Scripts {
+    <script>
+        urlCheckSession = '@Url.Action("CheckSession", "Common")';
+        urlLogin = '@Url.Action("Login", "Member")';
+
+
+
+        var wait_time = 0.00; //= $('#TotalTime').val();  // กำหนดเวลาให้รอ เป็นวินาที เอาไปคำนวณส่งค่ามาเป็นวินาทีอยู่แล้ว
+        var total_time = 0.00;  // กำหนดเวลาให้รอ เป็นวินาที เอาไปคำนวณส่งค่ามาเป็นวินาทีอยู่แล้ว
+        var timeount = @((int)ViewBag.SessionTime);
+        var add_time = 0;
+        var remind1 = 0;
+        var remind2 = 0;
+
+        $(function () {
+            if (!CheckSession()) return false;
+                //$('.i-checks').iCheck({
+                //    checkboxClass: 'icheckbox_square-green',
+                //    radioClass: 'iradio_square-green'
+                //});
+            //if (index == 0) {
+            //    index = parseInt($('#index').val());
+             //   var questionRow = LoadData(index,0,0);
+                //    $('#question-template').tmpl(questionRow).appendTo('#section');
+                remind1 =60* parseInt($('#Remind1').val());
+                remind2 = 60*parseInt($('#Remind2').val());
+                total_time = parseInt($('#TimeSet').val());
+                wait_time = parseInt($('#TimeSet').val()) - parseInt($('#TimeUsed').val());
+                add_time = ((wait_time) - wait_time) + 1;
+
+                window.onload = function () {
+                    vela = setInterval("decrease_num()", 1000);
+
+                    //by beebi 13/8/2557/////////////
+                    //document.onkeydown = alert_keycode;
+                    //document.onmousedown = alert_keycode;
+                    //document.onkeyup = alert_keycode;
+                    ////////////////////////////////
+                }
+
+
+
+        });
+
+
+        function submit() {
+            if (!CheckSession()) return false;
+
+            if ($('input[name=Choice]:checked').prop('id') != undefined && $('input[name=Choice]:checked').prop('id') != '') {
+                var answer = $('input[name=Choice]:checked').prop('id');
+                var question = $('#Question').val();
+                LoadData(index, answer)
+            } else
+                message('warning', "เลือกคำตอบก่อนปุ่ม Next")
+        }
+
+
+        function LoadData(index, answered) {
+            blockUI();
+            if (!CheckSession()) {
+                unblockUI();
+                return false;
+            }
+            var data;
+            var url = '@Url.Action("GetExam", "Exam")';
+            $.ajax({
+                url: url,
+                type: 'POST',
+                dataType: 'json',
+                async: false,
+                data: { orderRank: $('#index').val(), isFinal: $('#isFinal').val(), Answered: answered, TimeUsed: add_time },
+                success: function (response) {
+                    if (response.status == 0) {
+                        add_time = 0;
+                        if (response.url != null && response.url != undefined && response.url != '') {
+                            $('#TotalScore').val(response.TotalScore);
+                           // $('#finishedModal').modal('toggle');
+                            //$('#finishedModal').on('hidden.bs.modal', function () {
+                                // do something…
+                                $("#submitForm").submit();
+
+                              //  window.location.href = response.url;
+                            //})
+                        }
+
+                        $('#section').empty()
+                        $('#isFinal').val(response.data.isFinal);
+                        $('#question-template').tmpl(response.data).appendTo('#section');
+                        //$('.i-checks').iCheck({
+                        //    checkboxClass: 'icheckbox_square-green',
+                        //    radioClass: 'iradio_square-green'
+                        //});
+                        unblockUI();
+                    }
+                    else {
+                        unblockUI();
+                        message("error","ส่งข้อสอบไม่สำเร็จ");
+                    }
+                    //data = response.data;
+                },
+                error: function (response) {
+                    unblockUI();
+                    data = response.data;
+                }
+            });
+
+
+            return data;
+        }
+
+        function AutoSave(addTimes) {
+            if (!CheckSession()) return false;
+            var data;
+            var url = '@Url.Action("AutoSave", "Exam")';
+            $.ajax({
+                url: url,
+                type: 'POST',
+                dataType: 'json',
+                async: false,
+                data: { index: $('#index').val(), TimeUsed: add_time },
+                success: function (response) {
+                    if (response.status == 0) {
+                        add_time = 0;
+                    }
+                    else {
+                    }
+                },
+                error: function (response) {
+                }
+            });
+        }
+
+
+
+        // Update the count down every 1 second
+        //var TimeRemain = $('#TotalTime').val();
+        //var start = 0;
+        //var x = setInterval(function () {
+        //    var distance = TimeRemain - start;
+
+
+        //    var minutes = Math.floor((distance / 60));
+        //    var seconds = Math.floor((distance % 60));
+
+        //    // Display the result in the element with id="demo"
+        //    document.getElementById("demo").innerHTML = minutes + "m " + seconds + "s ";
+
+
+        //    // If the count down is finished, write some text
+        //    if (distance < 0) {
+        //        clearInterval(x);
+        //        document.getElementById("demo").innerHTML = "EXPIRED";
+        //    }
+        //    start += 1;
+        //}, 1000);
+
+
+        /////////////////////////////////////////////
+        function decrease_num() {
+            curmin = Math.floor(wait_time / 60);
+            cursec = wait_time % 60;
+            if (curmin < 10) { curmin = "0" + curmin; }
+            if (cursec < 10) { cursec = "0" + cursec; }
+
+
+            totalmin = Math.floor(total_time / 60);
+            totalsec = total_time % 60;
+            if (totalmin < 10) { totalmin = "0" + totalmin; }
+            if (totalsec < 10) { totalsec = "0" + totalsec; }
+
+            addcurmin = Math.floor(add_time / 60);
+            addcursec = add_time % 60;
+            if (addcurmin < 10) { addcurmin = "0" + addcurmin; }
+            if (addcursec < 10) { addcursec = "0" + addcursec; }
+
+
+            //--เหลือเวลา
+            var show_TimeRemainMin = document.getElementById('TimeRemainMin');
+            var show_TimeRemainSec = document.getElementById('TimeRemainSec');
+            show_TimeRemainMin.innerHTML = curmin;
+            show_TimeRemainSec.innerHTML = cursec;
+
+            /*
+            //---ใช้ไปเท่าไร
+            var show_place2 = document.getElementById('UsedTime');
+            show_place2.innerHTML = addcurmin + " : " + addcursec;
+            remainTime = (wait_time) - add_time;
+            //--เวลาทั้งหมด
+            var show_place = document.getElementById('TotalTime');
+            show_place.innerHTML = totalmin + " : " + totalsec;
+            */
+
+            if (wait_time > 0) {
+
+                if (wait_time == remind1) {
+
+                    message('warning', "เหลือเวลาสอบอีก " + $('#Remind1').val() + " นาที");   // คำสั่งหลังจากนับถอยหลังถึง 0 แล้ว
+                    //$('.time-div').css('color', 'red');
+                }
+
+                if (wait_time == remind2) {
+
+                    message('warning', "เหลือเวลาสอบอีก " + $('#Remind2').val() + " นาที");   // คำสั่งหลังจากนับถอยหลังถึง 0 แล้ว
+                    $('.time-div').css('color', 'red');
+                } else if (wait_time < remind2) {
+
+                    $('.time-div').css('color', 'red');
+                }
+
+                if (wait_time % 5 == 0) {
+                    AutoSave(add_time);
+                }
+
+                add_time++;
+                wait_time--;
+
+            } else {
+                if (wait_time == 0) {
+
+                    $('#TimeoutModal').modal('toggle');
+                    //message("หมดเวลาแล้ว ระบบจะประมวลผลและส่งผลสอบโดย อัตโนมัติ");   // คำสั่งหลังจากนับถอยหลังถึง 0 แล้ว
+
+                    clearInterval(vela);
+                    $('#isFinal').val(1)
+                    var answered_Final = $('input[name=Choice]:checked').prop('id') == undefined ? 0 : $('input[name=Choice]:checked').prop('id');
+                    var question = $('#Question').val();
+
+                    LoadData(index, answered_Final)
+                    //  window.location = '../../Dashboard/Index';
+                }
+            }
+
+        }
+//-------endtime--------------------
+
+    </script>
+
+
+    <script type='text/x-jquery-tmpl' id='question-template'>
+
+        <div class="panel-heading hbuilt">
+            <div class="panel-tools">
+            </div>
+            <div class="QuestionForm">
+                <div style="display: inline-block;"><h1 style="display:  inline-block;"><strong>{{html QuestionOrder}}.</strong></h1>{{html QuestionName}}</div>
+                <div style="display: inline-block;font-weight: 400;float:right;font-size: 18px;"><small>{{html QuestionOrder}}/@stat.TotalQuestion </small></div>
+                <input id="index" name="index" type="hidden" value="${QuestionOrder}">
+            </div>
+        </div>
+
+        <input id="Question" name="Question" type="hidden" value="${QuestionId}">
+        <input id="ExamId" name="ExamId" type="hidden" value="${ExamId}">
+        <div class="panel-body no-padding">
+            <ul class="list-group">
+                {{each(ChoiceId,ChoiceName,ChoiceType,Point) Choice}}
+                <li class="list-group-item">
+
+                    <input name="Choice" id="${ChoiceType}" type="radio"  value="0">
+                    <label class="Choicelabel" for="${ChoiceType}">{{html ChoiceName}}</label>
+
+                </li>
+                {{/each}}
+
+                <li class="list-group-item">
+                    {{if isFinal == 1}}
+                    <button id="submit" onclick="submit();" style="display:inline-block;" class="btn btn-primary" type="button"><i class="fa fa-check"></i> Submit</button>
+                    {{else}}
+                    <button id="next" onclick="submit()" style="display:inline-block;" class="btn btn-primary" type="button">Next <i class="fa fa-chevron-right"></i></button>
+                    {{/if}}
+                </li>
+            </ul>
+        </div>
+        <div>
+
+        </div>
+    </script>
+}
+
+@using (Html.BeginForm("ExamSummary", "Exam", FormMethod.Post, new { id = "submitForm", style = "display: block;" }))
+{
+
+    @*@Html.Hidden("index", (int)ViewBag.index, new { id = "index" })*@
+    @Html.Hidden("Durations", 1, new { id = "Durations" })
+    @Html.Hidden("isFinal", (int)ViewBag.isFinal, new { id = "isFinal" })
+    @Html.Hidden("TimeSet", (int)stat.TimeSet, new { id = "TimeSet" })
+    @Html.Hidden("Remind1", (int)stat.Remind1, new { id = "Remind1" })
+    @Html.Hidden("Remind2", (int)stat.Remind2, new { id = "Remind2" })
+    @Html.Hidden("TimeUsed", (int)stat.TimeUsed, new { id = "TimeUsed" })
+    @Html.Hidden("TestNo", (int)stat.TestNo, new { id = "TestNo" })
+    @Html.Hidden("ExamId", (int)stat.ExamId, new { id = "ExamId" })
+
+    @Html.Hidden("TotalScore", 0, new { id = "TotalScore" })
+}
+<div class="content">
+    <div class="col-md-3">
+        <div class="">
+            <div class="panel-body">
+                <div style="display: inline-block;">
+                    <div class="time-div">
+                        <img src="@Url.Content("../../Content/img/stopwatch128.png")" style="height:43px;">
+                        <label id="TimeRemainMin">00</label>:<label id="TimeRemainSec">00</label>
+                    </div>
+                    <div>@Resources.Resource.lbl_TimeLeft</div>
+                </div>
+                @*<div style="display: inline-block;">
+                        <div class="time-div ">
+                        </div>
+                        <div>Minute</div>
+                    </div>*@
+                @*<div style="display: inline-block;">
+                        <div class="time-div ">
+
+                        </div>
+                        <div>Second</div>
+                    </div>*@
+                @*<div>เวลาที่ทั้งหมด<label id="TotalTime"></label></div>
+                    <div>เวลาที่ใช้ไป<label id="UsedTime"></label></div>*@
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-9">
+        <div class="hpanel">
+
+
+
+            <div id="section">
+
+                <div class="panel-heading hbuilt">
+                    <div class="panel-tools">
+                    </div>
+                    <div class="QuestionForm">
+                        <div style="display: inline-block;"><h1 style="display:  inline-block;"><strong>@Model.QuestionOrder.</strong></h1> @(new HtmlString(Model.QuestionName))</div>
+                        <div style="display: inline-block;font-weight: 400;float:right;font-size: 18px;"><small>@Model.QuestionOrder<text>/</text>@stat.TotalQuestion</small></div>
+                        <input id="index" name="index" type="hidden" value="@Model.QuestionOrder">
+                    </div>
+                </div>
+
+                <input id="Question" name="Question" type="hidden" value="@Model.QuestionId">
+                <input id="ExamId" name="ExamId" type="hidden" value="@Model.ExamId">
+                <div class="panel-body no-padding">
+                    <ul class="list-group">
+                        @foreach (var choice in Model.Choice)
+                        {
+                            <li class="list-group-item">
+
+                                <input name="Choice" id="@choice.ChoiceType" type="radio" class="" value="0">
+                                <label class="Choicelabel" for="@choice.ChoiceType">@(new HtmlString(choice.ChoiceName))</label>
+
+                            </li>
+                        }
+
+                        <li class="list-group-item">
+                            @if ((int)ViewBag.isFinal == 1)
+                            {
+                                <button id="submit" onclick="submit();" style="display:inline-block;" class="btn btn-primary" type="button"><i class="fa fa-check"></i>@Resources.Resource.btn_Submit</button>
+                            }
+                            else
+                            {
+                                <button id="next" onclick="submit()" style="display:inline-block;" class="btn btn-primary" type="button">@Resources.Resource.btn_Next <i class="fa fa-chevron-right"></i></button>
+                            }
+                        </li>
+                    </ul>
+                </div>
+                <div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="TimeoutModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="color-line"></div>
+            <div class="modal-header text-center">
+                <h4 class="modal-title">หมดเวลาแล้ว ระบบจะประมวลผลและส่งผลสอบโดย อัตโนมัติ</h4>
+                @*  <small class="font-bold">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small>*@
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*<div class="modal fade" id="finishedModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="color-line"></div>
+                <div class="modal-header text-center">
+                    <h4 class="modal-title">ผลคะแนน : <label id="Score">0</label></h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>*@

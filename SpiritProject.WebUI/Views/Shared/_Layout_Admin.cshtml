@@ -1,0 +1,203 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="~/Vendor/fontawesome/css/font-awesome.css">
+    @{
+        var session = (SpiritProject.Common.MemberModel)Session["CurrentUser"];
+
+    }
+    <title>
+        @*@{
+                if (session.Role == "0")
+                {
+                    <text>Examiner</text>}
+                else
+                {
+                    <text> Admin </text>}
+            }*@
+        Personality Test
+    </title>
+    <style>
+        table.dataTable tbody th.dt-body-right,
+        table.dataTable tbody td.dt-body-right {
+            text-align: right;
+        }
+
+        table.dataTable tbody th.dt-body-center,
+        table.dataTable tbody td.dt-body-center {
+            text-align: center;
+        }
+    </style>
+    @*<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>*@
+    <!-- Primary vendor style -->
+    @Styles.Render("~/bundles/font-awesome/css")
+    @Styles.Render("~/bundles/bootstrap/css")
+    @Styles.Render("~/bundles/toastr/css")
+
+    <!-- Add local styles, mostly for plugins css file -->
+    @if (IsSectionDefined("Styles"))
+    {@RenderSection("Styles", required: false)}
+
+    <!-- Primary HOMER style -->
+    @Styles.Render("~/bundles/homer/css")
+    @*@Styles.Render("~/bundles/datatables/css")*@
+    @*@Styles.Render("~/bundles/flags/css")*@
+
+    <link href="~/Vendor/flags-master/css/flag-icon.css" rel='stylesheet' type='text/css' />
+    <link href="~/Vendor/datatables.net-bs/css/dataTables.bootstrap.min.css" rel='stylesheet' type='text/css' />
+
+</head>
+<body class="@Html.PageClass()">
+
+    <!-- Simple splash screen-->
+    <div class="splash"> <div class="color-line"></div><div class="splash-title"><h1>Homer - Responsive Admin Theme</h1><p>Special Admin Theme for small and medium webapp with very clean and aesthetic style and feel. </p><div class="spinner"> <div class="rect1"></div> <div class="rect2"></div> <div class="rect3"></div> <div class="rect4"></div> <div class="rect5"></div> </div> </div> </div>
+    <!--[if lt IE 7]>
+    <p class="alert alert-danger">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <!-- Header -->
+    <div id="header">
+        @Html.Partial("_Header")
+    </div>
+
+
+
+    <!-- Navigation -->
+    @*<aside id="menu">
+            @Html.Partial("_Navigation")
+        </aside>*@
+
+    <!-- Main view  -->
+    <div id="wrapper">
+        @RenderBody()
+
+        <!-- Right Sidebar -->
+        @Html.Partial("_Right_Sidebar")
+
+        <!-- Footer-->
+        @Html.Partial("_Footer")
+    </div>
+
+    <!-- Section for main scripts render -->
+    @Scripts.Render("~/bundles/jquery/js")
+    @Scripts.Render("~/bundles/bootstrap/js")
+    @Scripts.Render("~/bundles/homer/js")
+    @Scripts.Render("~/bundles/validation/js")
+    @Scripts.Render("~/bundles/toastr/js")
+    @Scripts.Render("~/bundles/datatables/js")
+    @Scripts.Render("~/bundles/datatablesBootstrap/js")
+    @Scripts.Render("~/bundles/datatablesPlugins/js")
+
+
+    <!-- Handler for local scripts -->
+    @RenderSection("scripts", required: false)
+    <script>
+
+        var languageEN = {
+            "search": "Search:",
+            "lengthMenu": "Show _MENU_ entries",
+            "paginate": {
+                "first": "First",
+                "last": "Last",
+                "next": "Next",
+                "previous": "Previous"
+            }
+        }
+        var languageTH = {
+            "search": "ค้นหา:",
+            "lengthMenu": "แสดง _MENU_ รายการ",
+            "paginate": {
+                "first": "หน้าเเรก",
+                "last": "หน้าสุดท้าย",
+                "next": "ถัดไป",
+                "previous": "ย้อนกลับ"
+            }
+        }
+
+        $(function () {
+
+
+                urlCheckSession = '@Url.Action("CheckSession", "Common")';
+                urlLogin = '@Url.Action("Login", "Admin")';
+
+
+        });
+
+        $("body").toggleClass("hide-sidebar");
+        $('[data-toggle="tooltip"]').tooltip()
+        function message(type, msg) {
+            //Toastr options
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": true,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "200",
+                "hideDuration": "500",
+                "timeOut": "2500",
+                "extendedTimeOut": "500",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            if (type.indexOf('info') >= 0) {
+                toastr.info(msg, 'Information');
+            }
+            else if (type.indexOf('warning') >= 0) {
+                toastr.warning(msg, 'Warning');
+            }
+            else if (type.indexOf('error') >= 0) {
+                toastr.error(msg, 'Error');
+            }
+            else {
+                toastr.success(msg, 'Information');
+            }
+        }
+
+        function CheckSession() {
+            var inSession;
+            $.ajax({
+                url: urlCheckSession,
+                type: 'POST',
+                async: false,
+                success: function (result) {
+                    if (result) {
+                        inSession = true;
+                    } else {
+                        alert('Session Timeout, กรุณา Login เข้าสู่ระบบอีกครั้ง');
+                        window.location.replace(urlLogin);
+                        inSession = false;
+                    }
+                },
+                error: function (response) {
+                    alert('การตรวจ Session มีปัญหา\r\n\r\n' + response.statusText);
+                    window.location.replace();
+                    inSession = false;
+                }
+            });
+            return inSession;
+        }
+    </script>
+
+    <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content border">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Alert</h4>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

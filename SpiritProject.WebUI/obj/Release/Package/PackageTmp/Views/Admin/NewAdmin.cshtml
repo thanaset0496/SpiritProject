@@ -1,0 +1,282 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+    ViewBag.Title = "New Admin";
+}
+<div class="content">
+    <div class="row">
+        <div class="col-lg-12 text-center m-t-md">
+            <h2>@Resources.Resource.lbl_AdminRegister</h2>
+
+            <small>@Resources.Resource.lbl_forAdmin</small>
+        </div>
+    </div>
+</div>
+
+
+<div class="register-container">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="text-center m-b-md">
+                @*<h3>Admin Registration</h3>*@
+            </div>
+            <div class="hpanel">
+                <div class="panel-body">
+                    @using (Html.BeginForm("Login", "Admin", FormMethod.Post, new { id = "registerAdminForm", style = "display: block;" }))
+                    {
+                        <div class="row">
+                            <div class="form-group col-lg-12">
+                                <label>@Resources.Resource.field_Username</label>
+                                <input type="text" value="" id="Username" name="Username" class="form-control" required>
+                            </div>
+                            <div class="form-group col-lg-12">
+                                <label>@Resources.Resource.field_Password</label>
+                                <input type="password" value="" id="Password" maxlength="30" name="Password" class="form-control" required>
+                            </div>
+
+                            <div class="form-group col-lg-12">
+                                <label>@Resources.Resource.field_RePassword</label>
+                                <input type="password" value="" id="RePassword" name="RePassword" maxlength="30" class="form-control" required>
+                            </div>
+                            <div class="form-group col-lg-12">
+                                <input type="checkbox" class="i-checks" id="showPass" /><small> Show Password</small>
+
+                            </div>
+                            <div class="form-group col-lg-12">
+                                <label>@Resources.Resource.field_Email</label>
+                                <input type="text" value="" id="Email" class="form-control" name="Email" required>
+                            </div>
+                            @*<div class="form-group col-lg-12">
+                                    <label>@Resources.Resource.lbl_Title</label>
+                                    <select type="text" value="" id="Title" class="form-control" name="Title" required>
+                                        <option>@Resources.Resource.lbl_Mr</option>
+                                        <option>@Resources.Resource.lbl_Mrs</option>
+                                        <option>@Resources.Resource.lbl_Ms</option>
+                                    </select>
+                                </div>*@
+                            <div class="form-group col-lg-6">
+                                <label>ชื่อ</label>
+                                <input type="text" value="" id="MemberNameTH" class="form-control" name="MemberNameTH" required>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label>นามสกุล</label>
+                                <input type="text" value="" id="MemberLastNameTH" class="form-control" name="MemberLastNameTH" required>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label>First Name</label>
+                                <input type="text" value="" id="MemberNameEN" class="form-control" name="MemberNameEN" required>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label>Last Name</label>
+                                <input type="text" value="" id="MemberLastNameEN" class="form-control" name="MemberLastNameEN" required>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-success" type="button" data-toggle="modal" data-target="#myModaNewAdmin">@Resources.Resource.btn_Confirm</button>
+                            <button class="btn btn-default" type="button" id="ResetFrom">@Resources.Resource.btn_Reset</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal fade hmodal-warning" id="myModaNewAdmin" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="color-line"></div>
+
+            <div class="modal-body">
+                <h4 class="modal-title">@Resources.Resource.lbl_ConfirmBox</h4>
+
+            </div>
+            <div class="modal-footer">
+                <button id="registerAdmin" class="btn btn-primary">@Resources.Resource.btn_Confirm</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">@Resources.Resource.btn_Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(function () {
+
+            $('#MemberNameEN').on('input', function () {
+                this.value = this.value.replace(/[^a-zA-Z/]/g, '');
+
+            });
+
+            $('#MemberLastNameEN').on('input', function () {
+                this.value = this.value.replace(/[^a-zA-Z/]/g, '');
+
+            });
+
+            $("#showPass").change(function () {
+                var checked = $(this).is(":checked");
+                if (checked) {
+                    $("#Password").attr("type", "text");
+                    $("#RePassword").attr("type", "text");
+                } else {
+                    $("#Password").attr("type", "password");
+                    $("#RePassword").attr("type", "password");
+                }
+            });
+
+            $('#Username').on('keypress', function (event) {
+                if (event.which != 13)
+                {
+                var regex = new RegExp("^[a-zA-Z0-9]+$");
+                var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+                    if (!regex.test(key)) {
+                        event.preventDefault();
+                        message('warning', 'Your password must be consisted of A-Z a-z 0-9 #@@&')
+                        return false;
+                    }
+                }
+            });
+
+            $('#Password').on('keypress', function (event) {
+                if (event.which != 13) {
+                    var regex = new RegExp("^[a-zA-Z0-9#@@&]+$");
+                    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+                    if (!regex.test(key)) {
+                        event.preventDefault();
+                        message('warning', 'Your password must be consisted of A-Z a-z 0-9 #@@&')
+                        return false;
+                    }
+                }
+            });
+
+            var validator =$('#registerAdminForm').validate({
+                rules: {
+                    Password: {
+                        required: true,
+                        minlength: 8
+                    },
+                    RePassword: {
+                        required: true,
+                        minlength: 8,
+                        equalTo: "#Password"
+                    },
+                    Email: {
+                        required: true,
+                        email: true
+                    }
+                },
+                messages: {
+                    Password: {
+                        required: "Please provide a password",
+                        minlength: "Your password must be at least 8 characters long"
+                    },
+                    RePassword: {
+                        required: "Please provide a password",
+                        minlength: "Your password must be at least 8 characters long",
+                        equalTo: "Please enter the same password as above"
+                    },
+                    Email: {
+                        required: "Please provide a email",
+                    }
+                }
+            });
+
+            $('#ResetFrom').on('click', function () {
+                validator.resetForm();
+                $('#Username').val('');
+                $('#Password').val('');
+                $('#RePassword').val('');
+                $('#Email').val('');
+                //$('#ReEmail').val('');
+                $('#MemberNameTH').val('');
+                $('#MemberLastNameTH').val('');
+                $('#MemberNameEN').val('');
+                $('#MemberLastNameEN').val('');
+            });
+
+            $('#registerAdmin').on('click', function () {
+                if ($('#registerAdminForm').valid() && validatePassword()) {
+                    blockUI();
+                    var username = $('#Username').val();
+                    var password = $('#Password').val();
+                    var repassword = $('#RePassword').val();
+                    var email = $('#Email').val();
+                    //var reemail = $('#ReEmail').val();
+                    var nameTh = $('#MemberNameTH').val();
+                    var lastnameTh = $('#MemberLastNameTH').val();
+                    var nameEn = $('#MemberNameEN').val();
+                    var lastnameEn = $('#MemberLastNameEN').val();
+                    var title = '';//$('#Title').val();
+
+                    if (password != repassword) {
+                        message("warning", "password not match !!")
+                        return false;
+                    }
+
+
+
+                    $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("CreateNewAdmin", "Admin")',
+                    data: {
+
+                        Username: username,
+                        Password: password,
+                        Email: email,
+                        MemberNameTH: nameTh,
+                        MemberLastNameTH: lastnameTh,
+                        MemberNameEN: nameEn,
+                        MemberLastNameEN: lastnameEn,
+                        Title: title
+
+                    },
+                    datatype: "JSON",
+                    success: function (Result) {
+
+                        if (Result.status == 1) {
+                            unblockUI();
+                              window.location = "@Url.Action("AdminList","Admin")";
+                        }
+                        else {
+                            unblockUI();
+                            message("warning", "มีผู้ใช้นี้อยู่แล้ว");
+                            $('#myModaNewAdmin').modal('hide');
+
+                        }
+                    }
+                    });
+                }
+                else
+                    $('#myModaNewAdmin').modal('hide');
+            });
+
+
+            });
+
+        function validatePassword() {
+            var pattern = /^[a-zA-Z0-9]*$/;
+            var p = document.getElementById('Password').value,
+                errors = [];
+            if (p.length < 8) {
+                errors.push("Your password must be at least 8 characters");
+            }
+            if (p.search(/[a-z]/) < 0) {
+                errors.push("Your password must contain at least one small letter.");
+            }
+            if (p.search(/[A-Z]/) < 0) {
+                errors.push("Your password must contain at least one capital letter.");
+            }
+            if (p.search(/[0-9]/) < 0) {
+                errors.push("Your password must contain at least one digit.");
+            }
+            if (p.search(/[#@@&]/) < 0) {
+                errors.push("Your password must be consisted of A-Z a-z 0-9 #@@&");
+            }
+            if (errors.length > 0) {
+                message("warning", errors.join("\n"));
+                //alert(errors.join("\n"));
+                return false;
+            }
+            return true;
+        }
+    </script>
+}

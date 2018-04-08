@@ -1,0 +1,139 @@
+﻿@{
+    Layout = "~/Views/Shared/_Login_Admin.cshtml";
+    ViewBag.Title = "Login";
+}
+
+<div class="login-container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="text-center m-b-md">
+                <div class="te-logo">
+                    <span>
+                        <img src="~/Content/img/logo.png" style="width:  120px;" />
+                    </span>
+                </div>
+                <br />
+                <h1>Welcome to Personality Assessment</h1>
+                <small>For Administrator</small>
+            </div>
+            <div class="hpanel">
+                <div class="panel-body">
+                    @using (Html.BeginForm("Login", "Admin", FormMethod.Post, new { id = "loginForm", style = "display: block;", autocomplete = "off" }))
+                    {
+                        <div class="form-group text-center">
+                            <label class="small text-danger">@ViewBag.Message</label>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="username">Username</label>
+                            <input type="text" placeholder="Username" title="Please enter you username" required="" value="" name="username" id="username" class="form-control" onkeypress="return isEngCharOrNumberKey(event);">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="password">Password</label>
+                            <input type="password" title="Please enter your password" maxlength="30" placeholder="******" @*required=""*@ value="" name="password" id="password" class="form-control" onkeypress="return isEngCharOrNumberKey(event);">
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" class="i-checks" id="showPass" /><small> Show Password</small>
+
+                        </div>
+                        <div class="form-group">
+                            <a class="help-block small" style="color: #00a5b7;" onclick="window.location='@Url.Action("AdminForm","SendMailer")'">Forgot Password </a>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-success btn-block" id="loginBtn" type="button">Log in</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section scripts
+    {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#username").focus();
+            $("#username").blur(function () {
+                $(this).val($.trim($(this).val()));
+            });
+
+            $('#password').on('input', function () {
+                this.value = this.value.replace(/[^0-9a-zA-z#@@&]/g, '');
+               
+            });
+
+
+            var validator = $('#loginForm').validate({
+                rules: {
+                    username: {
+                        required: true
+                    },
+                    password: {
+                        required: true,
+                        minlength: 8
+                    }
+                },
+                messages: {
+                    username: {
+                        required: "Please provide a Username"
+                    },
+                    password: {
+                        required: "Please provide a password",
+                        minlength: "Your password must be at least 8 characters long"
+                    }
+                }
+            });
+
+
+            $('#loginBtn').on('click', function () {
+                if ($('#loginForm').valid()) {
+                    $('#loginForm').submit();
+                }
+
+            })
+
+            $('#password').on('keypress', function (e) {
+                if (e.which === 13) {
+
+                    //do stuff here
+                    if ($('#loginForm').valid()) {
+                        $('#loginForm').submit();
+                    }
+                }
+            });
+
+            $("#showPass").change(function () {
+                var checked = $(this).is(":checked");
+                if (checked) {
+                    $("#password").attr("type", "text");
+                } else {
+                    $("#password").attr("type", "password");
+                }
+            });
+
+            BrowserDetection()
+        });
+        function BrowserDetection() {
+            if (navigator.userAgent.search("MSIE") >= 0) {
+                alert("Recommened Chrome");
+                //code goes here
+            }
+            //else if (navigator.userAgent.search("Chrome") >= 0) {
+            //    //code goes here
+            //    alert("Chrome");
+            //}
+            else if (navigator.userAgent.search("Firefox") >= 0) {
+                alert("Recommened Chrome");
+                //code goes here
+            }
+            else if (navigator.userAgent.search("Safari") >= 0 && navigator.userAgent.search("Chrome") < 0) {
+                //code goes here
+                alert("Recommened Chrome");
+            }
+            else if (navigator.userAgent.search("Opera") >= 0) {
+                //code goes here
+                alert("Recommened Chrome");
+            }
+        }
+    </script>
+}

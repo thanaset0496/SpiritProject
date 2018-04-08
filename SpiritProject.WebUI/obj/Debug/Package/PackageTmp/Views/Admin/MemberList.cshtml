@@ -1,0 +1,152 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+    ViewBag.Title = "UserList";
+    string curLang = "en"; ;
+    if (this.ViewContext.RouteData.Values["culture"] != null)
+    {
+        curLang = this.ViewContext.RouteData.Values["culture"].ToString();
+    }
+}
+
+
+<div class="content">
+
+
+    <div class="row">
+        <div class="col-lg-12 text-center m-t-md">
+            <h2>@Resources.Resource.lbl_ExaminerList</h2>
+
+            <small>@Resources.Resource.lbl_forAdmin</small>
+        </div>
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="hpanel">
+                <div class="panel-heading">
+                    <div class="panel-tools">
+                        @*<a class="closebox"><i class="fa fa-times"></i></a>*@
+                    </div>
+                    &nbsp;
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table id="Examhist" class="display table table-bordered" width="100%">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">@Resources.Resource.lbl_CitizenId</th>
+                                    <th class="text-center">@Resources.Resource.lbl_FullName</th>
+                                    <th class="text-center">@Resources.Resource.lbl_RecentDate</th>
+                                    <th class="text-center">@Resources.Resource.lbl_Times</th>
+                                    <th class="text-center">@Resources.Resource.lbl_Status</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+<div class="modal fade hmodal-warning" id="ModalUnlock" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="color-line"></div>
+
+            <div class="modal-body">
+                <h4 class="modal-title">@Resources.Resource.lbl_UnlockMember</h4>
+
+            </div>
+            <div class="modal-footer">
+                <button id="unlockMember" class="btn btn-primary">@Resources.Resource.btn_Unlock</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">@Resources.Resource.btn_Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+<script>
+    $(function () {
+        $("#Examhist").DataTable({
+            "processing": true,
+            "serverSide": true,
+            "searching": true,
+            "destroy": true,
+            "paging": true,
+            ajax: {
+                url: "@Url.Action("GetMemberList", "Admin")",
+                type: "POST"
+            },
+                columns: [
+                    { "data": "MemberId" },
+                    { "data": "FullName"},
+                    { "data": "LastAccess", className: "dt-body-center" },
+                    { "data": "TestNo", className: "dt-body-right"},
+
+
+                    {
+                        "targets": -1,
+                        "data": null,
+                        "orderable": false,
+                        "render": function (data, type, full, meta) {
+                            if (data.TestStatus === '2') {
+                                data = '<a onclick="Unlock(\'' + data.MemberId + '\')" ><i class="fa fa-lock text-success" ></i></a>';
+                            }
+                            else {
+
+                                data = "<i class='fa fa-lock'></i>";
+                            }
+
+                            return data;
+                        }, className: "dt-body-center"
+                    }
+            ],
+            dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
+            "lengthMenu": [[10, 25, 50, 2000], [10, 25, 50, "All"]],
+            buttons: [
+                //{ extend: 'copy', className: 'btn-sm' },
+                { extend: 'csv', title: 'Examiner List', className: 'btn-sm' },
+                { extend: 'pdf', title: 'Examiner List', className: 'btn-sm' },
+                { extend: 'print', className: 'btn-sm' }
+            ]
+             ,
+            'language': '@curLang' == 'en' ? languageEN : languageTH,
+            "scrollX": false
+        });
+
+    });
+        function Unlock(_username) {
+            $('#ModalUnlock').modal('show');
+            $('#unlockMember').on('click', function () {
+                blockUI();
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("UnlockMember", "Admin")',
+                    data: {
+                        Username: _username
+                    },
+                    datatype: "JSON",
+                    success: function (Result) {
+                        if (Result.status == 0) {
+                            unblockUI();
+                            $('#Examhist').DataTable().ajax.reload();
+                        }
+                        else {
+                            unblockUI();
+                            message("error", "Unlock Fail");
+                        }
+                        $('#ModalUnlock').modal('hide');
+                    }
+                });
+
+            });
+        }
+
+
+</script>
+}

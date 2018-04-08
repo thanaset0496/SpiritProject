@@ -1,0 +1,399 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="btn_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="btn_Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="btn_Unlock" xml:space="preserve">
+    <value>Unlock</value>
+  </data>
+  <data name="lbl_AdminConfig" xml:space="preserve">
+    <value>Admin Config</value>
+  </data>
+  <data name="lbl_AdminRegister" xml:space="preserve">
+    <value>Admin Registration</value>
+  </data>
+  <data name="lbl_chooseLang" xml:space="preserve">
+    <value>Choose language to start.</value>
+  </data>
+  <data name="lbl_ExaminerList" xml:space="preserve">
+    <value>Examiner List</value>
+  </data>
+  <data name="lbl_forAdmin" xml:space="preserve">
+    <value>For Administrator</value>
+  </data>
+  <data name="lbl_hello" xml:space="preserve">
+    <value>hello</value>
+  </data>
+  <data name="lbl_QuestionView" xml:space="preserve">
+    <value>Question List</value>
+  </data>
+  <data name="lbl_UnlockMember" xml:space="preserve">
+    <value>Unlock Member ?</value>
+  </data>
+  <data name="lbl_welcome" xml:space="preserve">
+    <value>Welcome to  PTT Personality Assessment</value>
+  </data>
+  <data name="btn_BeginExam" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="btn_Home" xml:space="preserve">
+    <value>Back to Main Page</value>
+  </data>
+  <data name="btn_Reset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="lbl_AdminList" xml:space="preserve">
+    <value>Admin List</value>
+  </data>
+  <data name="lbl_AdminReportList" xml:space="preserve">
+    <value>Examiner Report List</value>
+  </data>
+  <data name="lbl_CitizenId" xml:space="preserve">
+    <value>Citizen ID</value>
+  </data>
+  <data name="lbl_ConfirmBox" xml:space="preserve">
+    <value>Save ?</value>
+  </data>
+  <data name="lbl_ExamIntro" xml:space="preserve">
+    <value>Introduction</value>
+  </data>
+  <data name="lbl_ExamName" xml:space="preserve">
+    <value>Exam Name</value>
+  </data>
+  <data name="lbl_FactorEN" xml:space="preserve">
+    <value>Factor English</value>
+  </data>
+  <data name="lbl_FactorTH" xml:space="preserve">
+    <value>Factor Thai</value>
+  </data>
+  <data name="lbl_Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="lbl_LastAccess" xml:space="preserve">
+    <value>LastAccess</value>
+  </data>
+  <data name="lbl_LastName" xml:space="preserve">
+    <value>LastName</value>
+  </data>
+  <data name="lbl_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="lbl_NewAdmin" xml:space="preserve">
+    <value>New Admin</value>
+  </data>
+  <data name="lbl_QuestionEnglish" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="lbl_QuestionThai" xml:space="preserve">
+    <value>Thai</value>
+  </data>
+  <data name="lbl_RecentDate" xml:space="preserve">
+    <value>Recent Date</value>
+  </data>
+  <data name="lbl_Report" xml:space="preserve">
+    <value>Report</value>
+  </data>
+  <data name="lbl_StartDate" xml:space="preserve">
+    <value>Start Date</value>
+  </data>
+  <data name="lbl_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="lbl_SubfactorEN" xml:space="preserve">
+    <value>Subfactor English</value>
+  </data>
+  <data name="lbl_SubfactorTH" xml:space="preserve">
+    <value>Subfactor Thai</value>
+  </data>
+  <data name="lbl_Times" xml:space="preserve">
+    <value>Times</value>
+  </data>
+  <data name="lbl_UpdatedDate" xml:space="preserve">
+    <value>Updated Date</value>
+  </data>
+  <data name="lbl_Username" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="lbl_Version" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="menu_Analytics" xml:space="preserve">
+    <value>Analytics</value>
+  </data>
+  <data name="menu_Config" xml:space="preserve">
+    <value>Config</value>
+  </data>
+  <data name="menu_ExaminerList" xml:space="preserve">
+    <value>Examiner List</value>
+  </data>
+  <data name="menu_Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="menu_logOut" xml:space="preserve">
+    <value>Log Out</value>
+  </data>
+  <data name="menu_NewAdmin" xml:space="preserve">
+    <value>New Admin</value>
+  </data>
+  <data name="menu_QuestionReview" xml:space="preserve">
+    <value>Question Review</value>
+  </data>
+  <data name="lbl_FullName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="field_Email" xml:space="preserve">
+    <value>Email Address</value>
+  </data>
+  <data name="field_Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="field_RePassword" xml:space="preserve">
+    <value>Repeat Password</value>
+  </data>
+  <data name="field_Username" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="lbl_AccessTimes" xml:space="preserve">
+    <value>Access Times</value>
+  </data>
+  <data name="lbl_Choice" xml:space="preserve">
+    <value>Choice</value>
+  </data>
+  <data name="lbl_Complete" xml:space="preserve">
+    <value>Complete</value>
+  </data>
+  <data name="lbl_CompleteData" xml:space="preserve">
+    <value>Finished date and time</value>
+  </data>
+  <data name="lbl_Factor" xml:space="preserve">
+    <value>Factor</value>
+  </data>
+  <data name="lbl_From" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="lbl_Graph1" xml:space="preserve">
+    <value>Score Overview</value>
+  </data>
+  <data name="lbl_Graph2" xml:space="preserve">
+    <value>Score by Factors</value>
+  </data>
+  <data name="lbl_Level" xml:space="preserve">
+    <value>Level</value>
+  </data>
+  <data name="lbl_Mean" xml:space="preserve">
+    <value>Test Score</value>
+  </data>
+  <data name="lbl_Mean2" xml:space="preserve">
+    <value>[ENG]ผลสรุปแยกด้าน</value>
+  </data>
+  <data name="lbl_Mean3" xml:space="preserve">
+    <value>[ENG]คำแปล</value>
+  </data>
+  <data name="lbl_Minute" xml:space="preserve">
+    <value>Minute</value>
+  </data>
+  <data name="lbl_Mr" xml:space="preserve">
+    <value>Mr</value>
+  </data>
+  <data name="lbl_Mrs" xml:space="preserve">
+    <value>Mrs</value>
+  </data>
+  <data name="lbl_Ms" xml:space="preserve">
+    <value>Ms</value>
+  </data>
+  <data name="lbl_Norm" xml:space="preserve">
+    <value>Norm</value>
+  </data>
+  <data name="lbl_PortDone" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="lbl_PortTotal" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="lbl_Proportion" xml:space="preserve">
+    <value>Proportion of Test Item Done</value>
+  </data>
+  <data name="lbl_Question" xml:space="preserve">
+    <value>Question</value>
+  </data>
+  <data name="lbl_Summary1" xml:space="preserve">
+    <value>[ENG]ขณะนี้คุณได้ทำข้อสอบชุด</value>
+  </data>
+  <data name="lbl_Summary2" xml:space="preserve">
+    <value>[ENG]เสร็จสิ้นเเล้ว</value>
+  </data>
+  <data name="lbl_Summary3" xml:space="preserve">
+    <value>You have done this survey. Thank you for your time.</value>
+  </data>
+  <data name="lbl_TestDate" xml:space="preserve">
+    <value>Test Date</value>
+  </data>
+  <data name="lbl_TestTimes" xml:space="preserve">
+    <value>Times</value>
+  </data>
+  <data name="lbl_TimeUesd" xml:space="preserve">
+    <value>Time Used</value>
+  </data>
+  <data name="lbl_Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="lbl_Total" xml:space="preserve">
+    <value>Total question answered</value>
+  </data>
+  <data name="lbl_YourScore" xml:space="preserve">
+    <value>Your Score</value>
+  </data>
+  <data name="btn_Next" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="btn_Submit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="lbl_TimeLeft" xml:space="preserve">
+    <value>Time Left</value>
+  </data>
+  <data name="lbl_ResultScore" xml:space="preserve">
+    <value>Score Summary</value>
+  </data>
+  <data name="lbl_AdminName" xml:space="preserve">
+    <value>Admin Name</value>
+  </data>
+  <data name="lbl_Summary4" xml:space="preserve">
+    <value>The result of this survey show that you are the type of person</value>
+  </data>
+  <data name="lbl_Of" xml:space="preserve">
+    <value>of</value>
+  </data>
+  <data name="lbl_TimeSpent" xml:space="preserve">
+    <value>Time spent (Min)</value>
+  </data>
+  <data name="lbl_Unit" xml:space="preserve">
+    <value>Question</value>
+  </data>
+  <data name="lbl_YourScoreBad" xml:space="preserve">
+    <value>Your Score &lt; Norm</value>
+  </data>
+  <data name="lbl_YourScoreGood" xml:space="preserve">
+    <value>Your Score &gt;= Norm</value>
+  </data>
+</root>

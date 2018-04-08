@@ -1,0 +1,237 @@
+﻿@{
+    var session = (SpiritProject.Common.MemberModel)Session["CurrentUser"];
+
+    // if (session.Role == "1")
+    Layout = session.Role == "1" ? "~/Views/Shared/_Login_Admin.cshtml" : "~/Views/Shared/_Login_Member.cshtml";
+    // else
+    //   Layout = "~/Views/Shared/_Login_Member.cshtml";
+
+    ViewBag.Title = "Change Password";
+}
+
+
+<div class="login-container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="text-center m-b-md">
+                <div class="te-logo">
+                    <span>
+                        <img src="~/Content/img/logo.png" style="width:  120px;" />
+                    </span>
+                </div>
+                <br />
+                <h1>Welcome to Personality Assessment</h1>
+            </div>
+            <div class="hpanel">
+                <div class="panel-body">
+                    @{
+                        if (session.Role == "1")
+                        {
+                            using (Html.BeginForm("UpdateNewPassword", "Admin", FormMethod.Post, new { id = "changePassMemberForm", style = "display: block;" }))
+                            {
+
+                                <div class="form-group">
+                                    <label class="control-label" for="newpassword">NEW PASSWORD</label>
+                                    <input type="password" title="Please enter your password" placeholder="********" maxlength="30" required="required" value="" name="newpassword" id="newpassword" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="renewpassword">REPEAT NEW PASSWORD</label>
+                                    <input type="password" title="Please enter your password" placeholder="********" maxlength="30" required="required" value="" name="renewpassword" id="renewpassword" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <input type="checkbox" class="i-checks" id="show2Pass" /><small> Show Password</small>
+                                </div>
+                                <div class="form-group">
+                                    <div align="center">
+                                        <input name="Submit2" type="button" class="btn w-xs btn-success" value="  บันทึก  " onclick="" id="changeAdminSubmit">
+                                    </div>
+                                </div>
+
+                            }
+                        }
+                        else
+                        {
+                            using (Html.BeginForm("UpdateNewPassword", "Member", FormMethod.Post, new { id = "changePassMemberForm", style = "display: block;" }))
+                            {
+
+                                <div class="form-group">
+                                    <label class="control-label" for="newpassword">NEW PASSWORD</label>
+                                    <input type="password" title="Please enter your password" placeholder="********" required="required" value="" name="newpassword" id="newpassword" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="renewpassword">REPEAT NEW PASSWORD</label>
+                                    <input type="password" title="Please enter your password" placeholder="********" required="required" value="" name="renewpassword" id="renewpassword" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <input type="checkbox" class="i-checks" id="show2Pass" /><small> Show Password</small>
+                                </div>
+                                <div class="form-group">
+                                    <div align="center">
+                                        <input name="Submit2" type="button" class="btn w-xs btn-success" value="  บันทึก  " onclick="" id="changeSubmit">
+                                    </div>
+                                </div>
+
+                            }
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+@section scripts{
+    <script>
+        $(function () {
+
+            $("#show2Pass").on('change', function () {
+                var checked = $(this).is(":checked");
+                if (checked) {
+                    $("#newpassword").attr("type", "text");
+                    $("#renewpassword").attr("type", "text");
+                } else {
+                    $("#newpassword").attr("type", "password");
+                    $("#renewpassword").attr("type", "password");
+                }
+            });
+
+            $('#changePassMemberForm').validate({
+                rules: {
+                    newpassword: {
+                        required: true,
+                        minlength: 8
+                    },
+                    renewpassword: {
+                        required: true,
+                        minlength: 8,
+                        equalTo: "#newpassword"
+                    }
+                },
+                messages: {
+                    newpassword: {
+                        required: "Please provide a password",
+                        minlength: "Your password must be at least 8 characters long"
+                    },
+                    renewpassword: {
+                        required: "Please provide a password",
+                        minlength: "Your password must be at least 8 characters long",
+                        equalTo: "Please enter the same password as above"
+                    }
+                }
+            });
+
+            $('#newpassword').on('keypress', function (event) {
+                if (event.which != 13) {
+                var regex = new RegExp("^[a-zA-Z0-9#@@&]+$");
+                var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+                if (!regex.test(key)) {
+                    event.preventDefault();
+                    message('warning', 'Your password must be consisted of A-Z a-z 0-9 #@@&')
+                    return false;
+                }
+                }
+            });
+
+            $('#renewpassword').on('keypress', function (event) {
+                if (event.which != 13) {
+                    var regex = new RegExp("^[a-zA-Z0-9#@@&]+$");
+                    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+                    if (!regex.test(key)) {
+                        event.preventDefault();
+                        message('warning', 'Your password must be consisted of A-Z a-z 0-9 #@@&')
+                        return false;
+                    }
+                }
+            });
+
+
+
+            $('#changeSubmit').on('click', function () {
+                if ($('#changePassMemberForm').valid() && validatePassword()) {
+                    blockUI();
+                    var newpassword = $('#newpassword').val();
+
+                    $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("UpdateNewPassword", "Member")',
+                    data: {
+
+                        NewPassword: newpassword,
+
+                    },
+                    datatype: "JSON",
+                    success: function (respose) {
+
+                        if (respose.result == 'Success') {
+                            unblockUI();
+                            window.location = "@Url.Action("Login","Member")";
+                        }
+                        else {
+                            unblockUI();
+                            message("error", respose.result);
+                        }
+                    }
+                    });
+                }
+
+            });
+
+              $('#changeAdminSubmit').on('click', function () {
+                  if ($('#changePassMemberForm').valid() && validatePassword()) {
+                      blockUI();
+                    var newpassword = $('#newpassword').val();
+
+                    $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("UpdateNewPassword", "Admin")',
+                    data: {
+
+                        NewPassword: newpassword,
+
+                    },
+                    datatype: "JSON",
+                    success: function (respose) {
+
+                        if (respose.result == 'Success') {
+                              window.location = "@Url.Action("Login","Admin")";
+                              unblockUI();
+                        }
+                        else {
+                            message("error", respose.result);
+                            unblockUI();
+                        }
+                    }
+                    });
+                }
+
+            });
+        })
+
+
+        function validatePassword() {
+            var p = document.getElementById('newpassword').value,
+                errors = [];
+            if (p.length < 8) {
+                errors.push("Your password must be at least 8 characters");
+            }
+            if (p.search(/[a-z]/) < 0) {
+                errors.push("Your password must contain at least one small letter.");
+            }
+            if (p.search(/[A-Z]/) < 0) {
+                errors.push("Your password must contain at least one capital letter.");
+            }
+            if (p.search(/[0-9]/) < 0) {
+                errors.push("Your password must contain at least one digit.");
+            }
+            if (errors.length > 0) {
+                message("error", errors.join("\n"));
+                //alert(errors.join("\n"));
+                return false;
+            }
+            return true;
+        }
+    </script>
+}

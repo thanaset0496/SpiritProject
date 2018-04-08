@@ -1,0 +1,163 @@
+﻿@{
+    Layout = "~/Views/Shared/_Login_Member.cshtml";
+    ViewBag.Title = "Login";
+}
+
+@using (Html.BeginForm("CreateNewPassword", "Member", FormMethod.Post, new { id = "RegisterForm", style = "display: block;", autocomplete = "off" }))
+{
+
+    <div class="login-container">
+        <div class="row" id="preAuthen">
+            <div class="col-md-12">
+                <div class="text-center m-b-md">
+                    <div class="te-logo">
+                        <span>
+                            <img src="~/Content/img/logo.png" style="width:  120px;" />
+                        </span>
+                    </div>
+                    <br />
+                    <h1>Register</h1>
+                </div>
+                <div class="hpanel">
+                    <div class="panel-body">
+
+                        <div class="form-group">
+                            <label class="control-label" for="username">CITIZEN ID</label>
+                            <input type="text"
+                                   maxlength="13"
+                                   title="Please enter you username"
+                                   required="" value=""
+                                   name="username" id="username" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="dob">DATE OF BIRTH</label>
+                            <input type="text" title="Please enter your Date Of Birth" placeholder="20171231" required="" value="" name="dob" id="dob" maxlength="10" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <button class="btn btn-success btn-block" type="button" id="registerbtn">Submit</button>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<div class="modal fade hmodal-warning" id="myModalRegisterResponse" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="color-line"></div>
+
+            <div class="modal-body">
+                <h4 class="modal-title">ระบบได้ทำการส่ง Password ไปยัง E-mail ที่ท่านใช้ลงทะเบียนเอาไว้เเล้ว</h4>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts{
+    <script>
+        $(function () {
+
+            $("#ChangePassword").hide();
+            $("#registerbtn").on("click", function () {
+
+                if ($("#username").val() != "" && $("#dob").val() != "") {
+                    blockUI();
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("AuthenCheck", "Member")',
+                        data: {
+
+                            username: $("#username").val(),
+                            dob: $("#dob").val(),
+                        },
+                        datatype: "JSON",
+                        success: function (Result) {
+
+                            if (Result.data == "success")
+                            {
+                                unblockUI();
+
+                                //$("#preAuthen").hide();
+
+                                $('#myModalRegisterResponse').modal('show');
+                                $('#myModalRegisterResponse').on('hidden.bs.modal', function () {
+                                    // do something…
+                                  window.location = "@Url.Action("Login", "Member")";
+                                })
+                            }
+                            else if (Result.data == "duplicate") {
+                                unblockUI();
+                                message("error", "มีผู้ใช้นี้เคยเข้าใช้งานแล้ว");
+                            }
+                            else if (Result.data == "notexisted") {
+                                unblockUI();
+                                message("error", "ไม่พบผู้ใช้งาน");
+                            }
+                            else if (Result.data == "mailFail") {
+                                unblockUI();
+                                message("error", "ส่งเมลล์ไม่สำเร็จ โปรดติดต่อผู้ดูแลระบบ");
+                            }
+                            else {
+                                unblockUI();
+                                message("error", "ทำรายการไม่สำเร็จ");
+                            }
+                        }
+
+                    });
+                }
+                else
+                    message("error", "กรอกข้อมูลให้ครบถ้วน");
+                });
+
+
+        });
+
+        $('#dob').on('input', function () {
+            this.value = this.value.replace(/[^0-9/]/g, '');
+        });
+
+        $('#username').on('input', function () {
+            this.value = this.value.replace(/[^0-9/]/g, '');
+        });
+
+        $("#submit").on("click", function () {
+
+            $("#RegisterForm").submit();
+
+        });
+        function autoTab(obj) {
+            /* กำหนดรูปแบบข้อความโดยให้ _ แทนค่าอะไรก็ได้ แล้วตามด้วยเครื่องหมาย
+            หรือสัญลักษณ์ที่ใช้แบ่ง เช่นกำหนดเป็น  รูปแบบเลขที่บัตรประชาชน
+            4-2215-54125-6-12 ก็สามารถกำหนดเป็น  _-____-_____-_-__
+            รูปแบบเบอร์โทรศัพท์ 08-4521-6521 กำหนดเป็น __-____-____
+            หรือกำหนดเวลาเช่น 12:45:30 กำหนดเป็น __:__:__
+            ตัวอย่างข้างล่างเป็นการกำหนดรูปแบบเลขบัตรประชาชน
+            */
+            var pattern = new String("_-____-_____-_-__"); // กำหนดรูปแบบในนี้
+            var pattern_ex = new String("-"); // กำหนดสัญลักษณ์หรือเครื่องหมายที่ใช้แบ่งในนี้
+            var returnText = new String("");
+            var obj_l = obj.value.length;
+            var obj_l2 = obj_l - 1;
+            for (i = 0; i < pattern.length; i++) {
+                if (obj_l2 == i && pattern.charAt(i + 1) == pattern_ex) {
+                    returnText += obj.value + pattern_ex;
+                    obj.value = returnText;
+                }
+            }
+            if (obj_l >= pattern.length) {
+                obj.value = obj.value.substr(0, pattern.length);
+            }
+        }
+
+    </script>}

@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SpiritModelStoreContainer" CdmEntityContainer="SpiritContext">
+    <FunctionImportMapping FunctionImportName="SP_QIUD_EXAM" FunctionName="SpiritModel.Store.SP_QIUD_EXAM" />
+    <FunctionImportMapping FunctionImportName="SP_I_AnswerSheet" FunctionName="SpiritModel.Store.SP_I_AnswerSheet" />
+    <FunctionImportMapping FunctionImportName="SP_NEW_Member" FunctionName="SpiritModel.Store.SP_NEW_Member" />
+    <FunctionImportMapping FunctionImportName="SP_U_PASSWORD_Member" FunctionName="SpiritModel.Store.SP_U_PASSWORD_Member" />
+    <EntitySetMapping Name="TB_AnswerSheet">
+      <EntityTypeMapping TypeName="SpiritModel.TB_AnswerSheet">
+        <MappingFragment StoreEntitySet="TB_AnswerSheet">
+          <ScalarProperty Name="FakeChoiceId" ColumnName="FakeChoiceId" />
+          <ScalarProperty Name="ChoiceType" ColumnName="ChoiceType" />
+          <ScalarProperty Name="UpdateedDate" ColumnName="UpdateedDate" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="TimeUsed" ColumnName="TimeUsed" />
+          <ScalarProperty Name="Point" ColumnName="Point" />
+          <ScalarProperty Name="ChoiceId" ColumnName="ChoiceId" />
+          <ScalarProperty Name="TestNo" ColumnName="TestNo" />
+          <ScalarProperty Name="ExamId" ColumnName="ExamId" />
+          <ScalarProperty Name="QuestionOrder" ColumnName="QuestionOrder" />
+          <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+          <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_ChoiceWG">
+      <EntityTypeMapping TypeName="SpiritModel.TB_ChoiceWG">
+        <MappingFragment StoreEntitySet="TB_ChoiceWG">
+          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ChoiceType" ColumnName="ChoiceType" />
+          <ScalarProperty Name="Point" ColumnName="Point" />
+          <ScalarProperty Name="ChoiceNameEN" ColumnName="ChoiceNameEN" />
+          <ScalarProperty Name="ChoiceNameTH" ColumnName="ChoiceNameTH" />
+          <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+          <ScalarProperty Name="ChoiceId" ColumnName="ChoiceId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_Exam">
+      <EntityTypeMapping TypeName="SpiritModel.TB_Exam">
+        <MappingFragment StoreEntitySet="TB_Exam">
+          <ScalarProperty Name="Remind2" ColumnName="Remind2" />
+          <ScalarProperty Name="Remind1" ColumnName="Remind1" />
+          <ScalarProperty Name="ExamStatus" ColumnName="ExamStatus" />
+          <ScalarProperty Name="AddDate" ColumnName="AddDate" />
+          <ScalarProperty Name="ExamDesc" ColumnName="ExamDesc" />
+          <ScalarProperty Name="TotalTime" ColumnName="TotalTime" />
+          <ScalarProperty Name="TotalScore" ColumnName="TotalScore" />
+          <ScalarProperty Name="TotalQuestion" ColumnName="TotalQuestion" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="PrefixName" ColumnName="PrefixName" />
+          <ScalarProperty Name="ExamId" ColumnName="ExamId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_ExamStat">
+      <EntityTypeMapping TypeName="SpiritModel.TB_ExamStat">
+        <MappingFragment StoreEntitySet="TB_ExamStat">
+          <ScalarProperty Name="ExamAccessTimes" ColumnName="ExamAccessTimes" />
+          <ScalarProperty Name="TestStatus" ColumnName="TestStatus" />
+          <ScalarProperty Name="PageNo" ColumnName="PageNo" />
+          <ScalarProperty Name="FinishedDate" ColumnName="FinishedDate" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="TimeSet" ColumnName="TimeSet" />
+          <ScalarProperty Name="TimeUsed" ColumnName="TimeUsed" />
+          <ScalarProperty Name="ScoreGet" ColumnName="ScoreGet" />
+          <ScalarProperty Name="ScoreSet" ColumnName="ScoreSet" />
+          <ScalarProperty Name="ExamId" ColumnName="ExamId" />
+          <ScalarProperty Name="TestNo" ColumnName="TestNo" />
+          <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_Factor">
+      <EntityTypeMapping TypeName="SpiritModel.TB_Factor">
+        <MappingFragment StoreEntitySet="TB_Factor">
+          <ScalarProperty Name="FactorNameEN" ColumnName="FactorNameEN" />
+          <ScalarProperty Name="FactorNameTH" ColumnName="FactorNameTH" />
+          <ScalarProperty Name="FactorId" ColumnName="FactorId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_FakeChoice">
+      <EntityTypeMapping TypeName="SpiritModel.TB_FakeChoice">
+        <MappingFragment StoreEntitySet="TB_FakeChoice">
+          <ScalarProperty Name="Point" ColumnName="Point" />
+          <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="FakeChoiceType" ColumnName="FakeChoiceType" />
+          <ScalarProperty Name="FakeChoiceNameEN" ColumnName="FakeChoiceNameEN" />
+          <ScalarProperty Name="FakeChoiceNameTH" ColumnName="FakeChoiceNameTH" />
+          <ScalarProperty Name="FakeChoiceId" ColumnName="FakeChoiceId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_LogHistory">
+      <EntityTypeMapping TypeName="SpiritModel.TB_LogHistory">
+        <MappingFragment StoreEntitySet="TB_LogHistory">
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="LogText" ColumnName="LogText" />
+          <ScalarProperty Name="LogType" ColumnName="LogType" />
+          <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_Member">
+      <EntityTypeMapping TypeName="SpiritModel.TB_Member">
+        <MappingFragment StoreEntitySet="TB_Member">
+          <ScalarProperty Name="FailLogin" ColumnName="FailLogin" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Role" ColumnName="Role" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="LastAccess" ColumnName="LastAccess" />
+          <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+          <ScalarProperty Name="MemberDOB" ColumnName="MemberDOB" />
+          <ScalarProperty Name="MemberLastNameEN" ColumnName="MemberLastNameEN" />
+          <ScalarProperty Name="MemberNameEN" ColumnName="MemberNameEN" />
+          <ScalarProperty Name="MemberLastNameTH" ColumnName="MemberLastNameTH" />
+          <ScalarProperty Name="MemberNameTH" ColumnName="MemberNameTH" />
+          <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_Question">
+      <EntityTypeMapping TypeName="SpiritModel.TB_Question">
+        <MappingFragment StoreEntitySet="TB_Question">
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="QuestionStatus" ColumnName="QuestionStatus" />
+          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+          <ScalarProperty Name="DataEN" ColumnName="DataEN" />
+          <ScalarProperty Name="DataTH" ColumnName="DataTH" />
+          <ScalarProperty Name="SubFactorId" ColumnName="SubFactorId" />
+          <ScalarProperty Name="FactorId" ColumnName="FactorId" />
+          <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_SubFactor">
+      <EntityTypeMapping TypeName="SpiritModel.TB_SubFactor">
+        <MappingFragment StoreEntitySet="TB_SubFactor">
+          <ScalarProperty Name="SubFactorNameEN" ColumnName="SubFactorNameEN" />
+          <ScalarProperty Name="SubFactorNameTH" ColumnName="SubFactorNameTH" />
+          <ScalarProperty Name="FactorId" ColumnName="FactorId" />
+          <ScalarProperty Name="SubFactorId" ColumnName="SubFactorId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

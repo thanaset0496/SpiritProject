@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SpiritModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="SpiritContext" annotation:LazyLoadingEnabled="true">
+    <FunctionImport Name="SP_QIUD_EXAM">
+      <Parameter Name="Result" Mode="InOut" Type="Int32" />
+      <Parameter Name="TotalScore" Mode="InOut" Type="Int32" />
+      <Parameter Name="MemberId" Mode="In" Type="String" />
+      <Parameter Name="QuestionId" Mode="In" Type="Int32" />
+      <Parameter Name="QuestionOrder" Mode="In" Type="Int32" />
+      <Parameter Name="ChoiceId" Mode="In" Type="Int32" />
+      <Parameter Name="ChoiceType" Mode="In" Type="String" />
+      <Parameter Name="Point" Mode="In" Type="Int32" />
+      <Parameter Name="TimeUsed" Mode="In" Type="Decimal" />
+      <Parameter Name="ExamId" Mode="In" Type="Int32" />
+      <Parameter Name="Action" Mode="In" Type="String" />
+      <Parameter Name="IsFinal" Mode="In" Type="Int32" />
+      <Parameter Name="TestNo" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SP_I_AnswerSheet">
+      <Parameter Name="Result" Mode="InOut" Type="Int32" />
+      <Parameter Name="MemberId" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SP_NEW_Member">
+      <Parameter Name="Result" Mode="InOut" Type="Int32" />
+      <Parameter Name="MemberId" Mode="In" Type="String" />
+      <Parameter Name="Action" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SP_U_PASSWORD_Member">
+      <Parameter Name="Result" Mode="InOut" Type="String" />
+      <Parameter Name="MemberId" Mode="In" Type="String" />
+      <Parameter Name="OldPassword" Mode="In" Type="String" />
+      <Parameter Name="NewPassword" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="TB_AnswerSheet" EntityType="SpiritModel.TB_AnswerSheet" />
+    <EntitySet Name="TB_ChoiceWG" EntityType="SpiritModel.TB_ChoiceWG" />
+    <EntitySet Name="TB_Exam" EntityType="SpiritModel.TB_Exam" />
+    <EntitySet Name="TB_ExamStat" EntityType="SpiritModel.TB_ExamStat" />
+    <EntitySet Name="TB_Factor" EntityType="SpiritModel.TB_Factor" />
+    <EntitySet Name="TB_FakeChoice" EntityType="SpiritModel.TB_FakeChoice" />
+    <EntitySet Name="TB_LogHistory" EntityType="SpiritModel.TB_LogHistory" />
+    <EntitySet Name="TB_Member" EntityType="SpiritModel.TB_Member" />
+    <EntitySet Name="TB_Question" EntityType="SpiritModel.TB_Question" />
+    <EntitySet Name="TB_SubFactor" EntityType="SpiritModel.TB_SubFactor" />
+  </EntityContainer>
+  <EntityType Name="TB_AnswerSheet">
+    <Key>
+      <PropertyRef Name="MemberId" />
+      <PropertyRef Name="QuestionId" />
+      <PropertyRef Name="QuestionOrder" />
+      <PropertyRef Name="ExamId" />
+      <PropertyRef Name="TestNo" />
+    </Key>
+    <Property Name="MemberId" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="QuestionId" Type="Int32" Nullable="false" />
+    <Property Name="QuestionOrder" Type="Int32" Nullable="false" />
+    <Property Name="ExamId" Type="Int32" Nullable="false" />
+    <Property Name="TestNo" Type="Int32" Nullable="false" />
+    <Property Name="ChoiceId" Type="Int32" />
+    <Property Name="Point" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="TimeUsed" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="UpdateedDate" Type="DateTime" Precision="3" />
+    <Property Name="ChoiceType" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="FakeChoiceId" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TB_ChoiceWG">
+    <Key>
+      <PropertyRef Name="ChoiceId" />
+      <PropertyRef Name="QuestionId" />
+      <PropertyRef Name="ChoiceNameTH" />
+      <PropertyRef Name="ChoiceNameEN" />
+      <PropertyRef Name="Point" />
+    </Key>
+    <Property Name="ChoiceId" Type="Int32" Nullable="false" />
+    <Property Name="QuestionId" Type="Int32" Nullable="false" />
+    <Property Name="ChoiceNameTH" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="ChoiceNameEN" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Point" Type="Int32" Nullable="false" />
+    <Property Name="ChoiceType" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedBy" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="TB_Exam">
+    <Key>
+      <PropertyRef Name="ExamId" />
+      <PropertyRef Name="AddDate" />
+      <PropertyRef Name="ExamStatus" />
+    </Key>
+    <Property Name="ExamId" Type="Int32" Nullable="false" />
+    <Property Name="PrefixName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TotalQuestion" Type="Int32" />
+    <Property Name="TotalScore" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="TotalTime" Type="Int32" />
+    <Property Name="ExamDesc" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+    <Property Name="AddDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ExamStatus" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="Remind1" Type="Int32" />
+    <Property Name="Remind2" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TB_ExamStat">
+    <Key>
+      <PropertyRef Name="MemberId" />
+      <PropertyRef Name="TestNo" />
+      <PropertyRef Name="ExamId" />
+    </Key>
+    <Property Name="MemberId" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="TestNo" Type="Int32" Nullable="false" />
+    <Property Name="ExamId" Type="Int32" Nullable="false" />
+    <Property Name="ScoreSet" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="ScoreGet" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="TimeUsed" Type="Int32" />
+    <Property Name="TimeSet" Type="Int32" />
+    <Property Name="StartDate" Type="DateTime" Precision="3" />
+    <Property Name="FinishedDate" Type="DateTime" Precision="3" />
+    <Property Name="PageNo" Type="Int32" />
+    <Property Name="TestStatus" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+    <Property Name="ExamAccessTimes" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TB_Factor">
+    <Key>
+      <PropertyRef Name="FactorId" />
+      <PropertyRef Name="FactorNameTH" />
+      <PropertyRef Name="FactorNameEN" />
+    </Key>
+    <Property Name="FactorId" Type="Int32" Nullable="false" />
+    <Property Name="FactorNameTH" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
+    <Property Name="FactorNameEN" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="TB_FakeChoice">
+    <Key>
+      <PropertyRef Name="FakeChoiceId" />
+      <PropertyRef Name="FakeChoiceNameTH" />
+      <PropertyRef Name="FakeChoiceNameEN" />
+      <PropertyRef Name="FakeChoiceType" />
+      <PropertyRef Name="Status" />
+    </Key>
+    <Property Name="FakeChoiceId" Type="Int32" Nullable="false" />
+    <Property Name="FakeChoiceNameTH" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="FakeChoiceNameEN" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="FakeChoiceType" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+    <Property Name="UpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Point" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TB_LogHistory">
+    <Key>
+      <PropertyRef Name="MemberId" />
+      <PropertyRef Name="LogType" />
+      <PropertyRef Name="LogText" />
+      <PropertyRef Name="CreatedDate" />
+    </Key>
+    <Property Name="MemberId" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="LogType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LogText" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="TB_Member">
+    <Key>
+      <PropertyRef Name="MemberId" />
+      <PropertyRef Name="MemberNameTH" />
+      <PropertyRef Name="MemberLastNameTH" />
+      <PropertyRef Name="MemberNameEN" />
+      <PropertyRef Name="MemberLastNameEN" />
+      <PropertyRef Name="RegisterDate" />
+      <PropertyRef Name="Status" />
+      <PropertyRef Name="FailLogin" />
+    </Key>
+    <Property Name="MemberId" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="true" />
+    <Property Name="MemberNameTH" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="MemberLastNameTH" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="MemberNameEN" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="MemberLastNameEN" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="MemberDOB" Type="DateTime" Precision="0" />
+    <Property Name="RegisterDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="LastAccess" Type="DateTime" Precision="3" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FailLogin" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TB_Question">
+    <Key>
+      <PropertyRef Name="QuestionId" />
+    </Key>
+    <Property Name="QuestionId" Type="Int32" Nullable="false" />
+    <Property Name="FactorId" Type="Int32" />
+    <Property Name="SubFactorId" Type="Int32" />
+    <Property Name="DataTH" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+    <Property Name="DataEN" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+    <Property Name="QuestionStatus" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedBy" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="TB_SubFactor">
+    <Key>
+      <PropertyRef Name="SubFactorId" />
+      <PropertyRef Name="FactorId" />
+      <PropertyRef Name="SubFactorNameTH" />
+      <PropertyRef Name="SubFactorNameEN" />
+    </Key>
+    <Property Name="SubFactorId" Type="Int32" Nullable="false" />
+    <Property Name="FactorId" Type="Int32" Nullable="false" />
+    <Property Name="SubFactorNameTH" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
+    <Property Name="SubFactorNameEN" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
+  </EntityType>
+</Schema>

@@ -1,0 +1,236 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+    ViewBag.Title = "Config Admin";
+}
+@model SpiritProject.Common.MemberModel
+
+<div class="content">
+    <div class="row">
+        <div class="col-lg-12 text-center m-t-md">
+            <h2>@Resources.Resource.lbl_AdminConfig</h2>
+
+            <small>@Resources.Resource.lbl_forAdmin</small>
+        </div>
+    </div>
+</div>
+<div class="register-container">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="hpanel">
+                <div class="panel-body">
+                    @using (Html.BeginForm("Index", "Dashboard", FormMethod.Post, new { id = "ConfigAdminForm", style = "display: block;" }))
+                    {
+                        <div class="row">
+                            <div class="form-group col-lg-12">
+                                <label>Password</label>
+                                <input type="password" value="" id="Password" name="Password" class="form-control">
+                            </div>
+                            <div class="form-group col-lg-12">
+                                <label>Repeat Password</label>
+                                <input type="password" value="" id="RePassword" name="RePassword" class="form-control">
+                            </div>
+                            <div class="form-group col-lg-12">
+                                <label>Email Address</label>
+                                <input type="text" value="@Model.Email" id="Email" name="Email" class="form-control">
+                            </div>
+                            <div class="form-group col-lg-12">
+                                <label>@Resources.Resource.lbl_Title</label>
+                                <select id="Title" class="form-control" name="Title" required>
+                                    <option value="@Resources.Resource.lbl_Mr">@Resources.Resource.lbl_Mr</option>
+                                    <option value="@Resources.Resource.lbl_Mrs">@Resources.Resource.lbl_Mrs</option>
+                                    <option value="@Resources.Resource.lbl_Ms">@Resources.Resource.lbl_Ms</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label>ชื่อ</label>
+                                <input type="text" value="@Model.MemberNameTH" id="MemberNameTH" class="form-control" name="MemberNameTH" required>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label>นามสกุล</label>
+                                <input type="text" value="@Model.MemberLastNameTH" id="MemberLastNameTH" class="form-control" name="MemberLastNameTH" required>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label>First Name</label>
+                                <input type="text" value="@Model.MemberNameEN" id="MemberNameEN" class="form-control" name="MemberNameEN" required>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label>Last Name</label>
+                                <input type="text" value="@Model.MemberLastNameEN" id="MemberLastNameEN" class="form-control" name="MemberLastNameEN" required>
+                            </div>
+
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-success" type="button" data-toggle="modal" data-target="#myModaConfig">@Resources.Resource.btn_Confirm</button>
+                            <button class="btn btn-default" type="button" id="ResetFrom">@Resources.Resource.btn_Reset</button>
+                            @*  <button type="button" class="btn btn-success" >Update</button>*@
+                            @*<button type="button" class="btn btn-default">Cancel</button>*@
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal fade hmodal-warning" id="myModaConfig" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="color-line"></div>
+
+            <div class="modal-body">
+                <h4 class="modal-title">@Resources.Resource.lbl_ConfirmBox</h4>
+
+            </div>
+            <div class="modal-footer">
+                <button id="configAdmin" class="btn btn-primary">@Resources.Resource.btn_Confirm</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">@Resources.Resource.btn_Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(function () {
+            var validator = $('#ConfigAdminForm').validate({
+                rules: {
+
+                    Title: {
+                        required: true
+                    }
+                    ,
+                    MemberNameTH: {
+                        required: true
+                    }
+                    ,
+                    MemberLastNameTH: {
+                        required: true
+                    }
+                    ,
+                    MemberNameEN: {
+                        required: true
+                    }
+                    ,
+                    MemberLastNameEN: {
+                        required: true
+                    },
+                    Email: {
+                        required: true,
+                        email: true
+                    }
+                },
+                messages: {
+
+                    Title: {
+                        required: "Please provide a Title",
+                    },
+                    MemberNameTH: {
+                        required: "Please provide a ชื่อ",
+                    },
+                    MemberLastNameTH: {
+                        required: "Please provide a นามสกุล",
+                    }
+                    ,
+                    MemberNameEN: {
+                        required: "Please provide a Name",
+                    }
+                    ,
+                    MemberLastNameEN: {
+                        required: "Please provide a Last Name",
+                    },
+                    Email: {
+                        required: "Please provide a email",
+                    }
+                }
+            });
+
+            $('#ResetFrom').on('click', function () {
+                validator.resetForm();
+
+                $('#Password').val('');
+                $('#RePassword').val('');
+                $('#Email').val('');
+                // $('#ReEmail').val('');
+                $('#MemberNameTH').val('');
+                $('#MemberLastNameTH').val('');
+                $('#MemberNameEN').val('');
+                $('#MemberLastNameEN').val('');
+            });
+
+            $('#configAdmin').on('click', function () {
+                if ($('#ConfigAdminForm').valid() && validatePassword()) {
+                    blockUI();
+                    //  var username = $('#Username').val();
+                    var password = $('#Password').val();
+                    var repassword = $('#RePassword').val();
+                    var email = $('#Email').val();
+                    var nameTh = $('#MemberNameTH').val();
+                    var lastnameTh = $('#MemberLastNameTH').val();
+                    var nameEn = $('#MemberNameEN').val();
+                    var lastnameEn = $('#MemberLastNameEN').val();
+                    var title = $('#Title').val();
+
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("ConfigAdmin", "Admin")',
+                        data: {
+
+                            //  Username: username,
+                            Password: password,
+                            Email: email,
+                            MemberNameTH: nameTh,
+                            MemberLastNameTH: lastnameTh,
+                            MemberNameEN: nameEn,
+                            MemberLastNameEN: lastnameEn,
+                            Title: title
+                        },
+                        datatype: "JSON",
+                        success: function (Result) {
+
+                            if (Result.status == 1) {
+                                unblockUI();
+                                window.location = "@Url.Action("Index","Admin")";
+                            }
+                            else {
+                                unblockUI();
+                                message("error", "มีผู้ใช้นี้อยู่แล้ว");
+                            }
+                        }
+                    });
+                }
+                else
+                        $('#myModaConfig').modal('hide');
+
+            });
+    });
+
+        function validatePassword() {
+            var p = document.getElementById('Password').value;
+            var Rep = document.getElementById('RePassword').value;
+            errors = [];
+
+            if (p != '' && Rep != '') {
+                if (p != Rep) {
+                    errors.push("Please enter the same password as above");
+                }
+                if (p.length < 8) {
+                    errors.push("Your password must be at least 8 characters");
+                }
+                if (p.search(/[a-z]/) < 0) {
+                    errors.push("Your password must contain at least one small letter.");
+                }
+                if (p.search(/[A-Z]/) < 0) {
+                    errors.push("Your password must contain at least one capital letter.");
+                }
+                if (p.search(/[0-9]/) < 0) {
+                    errors.push("Your password must contain at least one digit.");
+                }
+                if (errors.length > 0) {
+                    message("error", errors.join("\n"));
+                    return false;
+                }
+            }
+            return true;
+        }
+    </script>
+}

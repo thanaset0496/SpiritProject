@@ -1,0 +1,762 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SpiritModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PTT_Prescreen_Test.dbo.TB_AnswerSheet' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TB_AnswerSheet">
+          <Key>
+            <PropertyRef Name="MemberId" />
+            <PropertyRef Name="QuestionId" />
+            <PropertyRef Name="QuestionOrder" />
+            <PropertyRef Name="ExamId" />
+            <PropertyRef Name="TestNo" />
+          </Key>
+          <Property Name="MemberId" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="QuestionId" Type="int" Nullable="false" />
+          <Property Name="QuestionOrder" Type="int" Nullable="false" />
+          <Property Name="ExamId" Type="int" Nullable="false" />
+          <Property Name="TestNo" Type="int" Nullable="false" />
+          <Property Name="ChoiceId" Type="int" />
+          <Property Name="Point" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="TimeUsed" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="UpdateedDate" Type="datetime" />
+          <Property Name="ChoiceType" Type="nvarchar" MaxLength="5" />
+          <Property Name="FakeChoiceId" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PTT_Prescreen_Test.dbo.TB_ChoiceWG' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TB_ChoiceWG">
+          <Key>
+            <PropertyRef Name="ChoiceId" />
+            <PropertyRef Name="QuestionId" />
+            <PropertyRef Name="ChoiceNameTH" />
+            <PropertyRef Name="ChoiceNameEN" />
+            <PropertyRef Name="Point" />
+          </Key>
+          <Property Name="ChoiceId" Type="int" Nullable="false" />
+          <Property Name="QuestionId" Type="int" Nullable="false" />
+          <Property Name="ChoiceNameTH" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="ChoiceNameEN" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Point" Type="int" Nullable="false" />
+          <Property Name="ChoiceType" Type="nvarchar" MaxLength="1" />
+          <Property Name="Status" Type="nvarchar" MaxLength="1" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="500" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PTT_Prescreen_Test.dbo.TB_Exam' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TB_Exam">
+          <Key>
+            <PropertyRef Name="ExamId" />
+            <PropertyRef Name="AddDate" />
+            <PropertyRef Name="ExamStatus" />
+          </Key>
+          <Property Name="ExamId" Type="int" Nullable="false" />
+          <Property Name="PrefixName" Type="nvarchar" MaxLength="10" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="50" />
+          <Property Name="TotalQuestion" Type="int" />
+          <Property Name="TotalScore" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="TotalTime" Type="int" />
+          <Property Name="ExamDesc" Type="nvarchar" MaxLength="2000" />
+          <Property Name="AddDate" Type="datetime" Nullable="false" />
+          <Property Name="ExamStatus" Type="nvarchar" MaxLength="1" Nullable="false" />
+          <Property Name="Remind1" Type="int" />
+          <Property Name="Remind2" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PTT_Prescreen_Test.dbo.TB_ExamStat' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TB_ExamStat">
+          <Key>
+            <PropertyRef Name="MemberId" />
+            <PropertyRef Name="TestNo" />
+            <PropertyRef Name="ExamId" />
+          </Key>
+          <Property Name="MemberId" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="TestNo" Type="int" Nullable="false" />
+          <Property Name="ExamId" Type="int" Nullable="false" />
+          <Property Name="ScoreSet" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="ScoreGet" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="TimeUsed" Type="int" />
+          <Property Name="TimeSet" Type="int" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="FinishedDate" Type="datetime" />
+          <Property Name="PageNo" Type="int" />
+          <Property Name="TestStatus" Type="nchar" MaxLength="1" />
+          <Property Name="ExamAccessTimes" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PTT_Prescreen_Test.dbo.TB_Factor' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TB_Factor">
+          <Key>
+            <PropertyRef Name="FactorId" />
+            <PropertyRef Name="FactorNameTH" />
+            <PropertyRef Name="FactorNameEN" />
+          </Key>
+          <Property Name="FactorId" Type="int" Nullable="false" />
+          <Property Name="FactorNameTH" Type="nvarchar" MaxLength="2000" Nullable="false" />
+          <Property Name="FactorNameEN" Type="nvarchar" MaxLength="2000" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PTT_Prescreen_Test.dbo.TB_FakeChoice' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TB_FakeChoice">
+          <Key>
+            <PropertyRef Name="FakeChoiceId" />
+            <PropertyRef Name="FakeChoiceNameTH" />
+            <PropertyRef Name="FakeChoiceNameEN" />
+            <PropertyRef Name="FakeChoiceType" />
+            <PropertyRef Name="Status" />
+          </Key>
+          <Property Name="FakeChoiceId" Type="int" Nullable="false" />
+          <Property Name="FakeChoiceNameTH" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="FakeChoiceNameEN" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="FakeChoiceType" Type="nvarchar" MaxLength="2" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="2" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="Point" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PTT_Prescreen_Test.dbo.TB_LogHistory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TB_LogHistory">
+          <Key>
+            <PropertyRef Name="MemberId" />
+            <PropertyRef Name="LogType" />
+            <PropertyRef Name="LogText" />
+            <PropertyRef Name="CreatedDate" />
+          </Key>
+          <Property Name="MemberId" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="LogType" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LogText" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PTT_Prescreen_Test.dbo.TB_Member' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TB_Member">
+          <Key>
+            <PropertyRef Name="MemberId" />
+            <PropertyRef Name="MemberNameTH" />
+            <PropertyRef Name="MemberLastNameTH" />
+            <PropertyRef Name="MemberNameEN" />
+            <PropertyRef Name="MemberLastNameEN" />
+            <PropertyRef Name="RegisterDate" />
+            <PropertyRef Name="Status" />
+            <PropertyRef Name="FailLogin" />
+          </Key>
+          <Property Name="MemberId" Type="nvarchar" MaxLength="13" Nullable="false" />
+          <Property Name="MemberNameTH" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="MemberLastNameTH" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="MemberNameEN" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="MemberLastNameEN" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="MemberDOB" Type="date" />
+          <Property Name="RegisterDate" Type="datetime" Nullable="false" />
+          <Property Name="LastAccess" Type="datetime" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="Role" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="500" />
+          <Property Name="Email" Type="nvarchar" MaxLength="500" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="FailLogin" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PTT_Prescreen_Test.dbo.TB_Question' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TB_Question">
+          <Key>
+            <PropertyRef Name="QuestionId" />
+          </Key>
+          <Property Name="QuestionId" Type="int" Nullable="false" />
+          <Property Name="FactorId" Type="int" />
+          <Property Name="SubFactorId" Type="int" />
+          <Property Name="DataTH" Type="nvarchar" MaxLength="4000" />
+          <Property Name="DataEN" Type="nvarchar" MaxLength="4000" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="QuestionStatus" Type="nvarchar" MaxLength="2" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PTT_Prescreen_Test.dbo.TB_SubFactor' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TB_SubFactor">
+          <Key>
+            <PropertyRef Name="SubFactorId" />
+            <PropertyRef Name="FactorId" />
+            <PropertyRef Name="SubFactorNameTH" />
+            <PropertyRef Name="SubFactorNameEN" />
+          </Key>
+          <Property Name="SubFactorId" Type="int" Nullable="false" />
+          <Property Name="FactorId" Type="int" Nullable="false" />
+          <Property Name="SubFactorNameTH" Type="nvarchar" MaxLength="2000" Nullable="false" />
+          <Property Name="SubFactorNameEN" Type="nvarchar" MaxLength="2000" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'PTT_Prescreen_Test.dbo.vApplicant_forPrescreenApp' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="vApplicant_forPrescreenApp">
+          <Property Name="ApplicantCode" Type="nvarchar" MaxLength="100" />
+          <Property Name="PersonalID" Type="nvarchar" MaxLength="100" />
+          <Property Name="Email" Type="nvarchar" MaxLength="500" />
+          <Property Name="title" Type="nvarchar" MaxLength="100" />
+          <Property Name="FirstName_En" Type="nvarchar" MaxLength="500" />
+          <Property Name="LastName_En" Type="nvarchar" MaxLength="500" />
+          <Property Name="FirstName_Th" Type="nvarchar" MaxLength="500" />
+          <Property Name="LastName_Th" Type="nvarchar" MaxLength="500" />
+          <Property Name="BirthDate" Type="datetime" />
+        </EntityType>-->
+        <Function Name="SP_I_AnswerSheet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Result" Type="int" Mode="InOut" />
+          <Parameter Name="MemberId" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SP_NEW_Member" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Result" Type="int" Mode="InOut" />
+          <Parameter Name="MemberId" Type="nvarchar" Mode="In" />
+          <Parameter Name="Action" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SP_QIUD_EXAM" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Result" Type="int" Mode="InOut" />
+          <Parameter Name="TotalScore" Type="int" Mode="InOut" />
+          <Parameter Name="MemberId" Type="nvarchar" Mode="In" />
+          <Parameter Name="QuestionId" Type="int" Mode="In" />
+          <Parameter Name="QuestionOrder" Type="int" Mode="In" />
+          <Parameter Name="ChoiceId" Type="int" Mode="In" />
+          <Parameter Name="ChoiceType" Type="nvarchar" Mode="In" />
+          <Parameter Name="Point" Type="int" Mode="In" />
+          <Parameter Name="TimeUsed" Type="decimal" Mode="In" />
+          <Parameter Name="ExamId" Type="int" Mode="In" />
+          <Parameter Name="Action" Type="nvarchar" Mode="In" />
+          <Parameter Name="IsFinal" Type="int" Mode="In" />
+          <Parameter Name="TestNo" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_U_PASSWORD_Member" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Result" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="MemberId" Type="nvarchar" Mode="In" />
+          <Parameter Name="OldPassword" Type="nvarchar" Mode="In" />
+          <Parameter Name="NewPassword" Type="nvarchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="SpiritModelStoreContainer">
+          <EntitySet Name="TB_AnswerSheet" EntityType="Self.TB_AnswerSheet" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TB_AnswerSheet].[MemberId] AS [MemberId], 
+    [TB_AnswerSheet].[QuestionId] AS [QuestionId], 
+    [TB_AnswerSheet].[QuestionOrder] AS [QuestionOrder], 
+    [TB_AnswerSheet].[ExamId] AS [ExamId], 
+    [TB_AnswerSheet].[TestNo] AS [TestNo], 
+    [TB_AnswerSheet].[ChoiceId] AS [ChoiceId], 
+    [TB_AnswerSheet].[Point] AS [Point], 
+    [TB_AnswerSheet].[TimeUsed] AS [TimeUsed], 
+    [TB_AnswerSheet].[CreatedDate] AS [CreatedDate], 
+    [TB_AnswerSheet].[UpdateedDate] AS [UpdateedDate], 
+    [TB_AnswerSheet].[ChoiceType] AS [ChoiceType], 
+    [TB_AnswerSheet].[FakeChoiceId] AS [FakeChoiceId]
+    FROM [dbo].[TB_AnswerSheet] AS [TB_AnswerSheet]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TB_ChoiceWG" EntityType="Self.TB_ChoiceWG" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TB_ChoiceWG].[ChoiceId] AS [ChoiceId], 
+    [TB_ChoiceWG].[QuestionId] AS [QuestionId], 
+    [TB_ChoiceWG].[ChoiceNameTH] AS [ChoiceNameTH], 
+    [TB_ChoiceWG].[ChoiceNameEN] AS [ChoiceNameEN], 
+    [TB_ChoiceWG].[Point] AS [Point], 
+    [TB_ChoiceWG].[ChoiceType] AS [ChoiceType], 
+    [TB_ChoiceWG].[Status] AS [Status], 
+    [TB_ChoiceWG].[UpdatedBy] AS [UpdatedBy], 
+    [TB_ChoiceWG].[UpdatedDate] AS [UpdatedDate]
+    FROM [dbo].[TB_ChoiceWG] AS [TB_ChoiceWG]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TB_Exam" EntityType="Self.TB_Exam" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TB_Exam].[ExamId] AS [ExamId], 
+    [TB_Exam].[PrefixName] AS [PrefixName], 
+    [TB_Exam].[FullName] AS [FullName], 
+    [TB_Exam].[TotalQuestion] AS [TotalQuestion], 
+    [TB_Exam].[TotalScore] AS [TotalScore], 
+    [TB_Exam].[TotalTime] AS [TotalTime], 
+    [TB_Exam].[ExamDesc] AS [ExamDesc], 
+    [TB_Exam].[AddDate] AS [AddDate], 
+    [TB_Exam].[ExamStatus] AS [ExamStatus], 
+    [TB_Exam].[Remind1] AS [Remind1], 
+    [TB_Exam].[Remind2] AS [Remind2]
+    FROM [dbo].[TB_Exam] AS [TB_Exam]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TB_ExamStat" EntityType="Self.TB_ExamStat" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TB_ExamStat].[MemberId] AS [MemberId], 
+    [TB_ExamStat].[TestNo] AS [TestNo], 
+    [TB_ExamStat].[ExamId] AS [ExamId], 
+    [TB_ExamStat].[ScoreSet] AS [ScoreSet], 
+    [TB_ExamStat].[ScoreGet] AS [ScoreGet], 
+    [TB_ExamStat].[TimeUsed] AS [TimeUsed], 
+    [TB_ExamStat].[TimeSet] AS [TimeSet], 
+    [TB_ExamStat].[StartDate] AS [StartDate], 
+    [TB_ExamStat].[FinishedDate] AS [FinishedDate], 
+    [TB_ExamStat].[PageNo] AS [PageNo], 
+    [TB_ExamStat].[TestStatus] AS [TestStatus], 
+    [TB_ExamStat].[ExamAccessTimes] AS [ExamAccessTimes]
+    FROM [dbo].[TB_ExamStat] AS [TB_ExamStat]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TB_Factor" EntityType="Self.TB_Factor" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TB_Factor].[FactorId] AS [FactorId], 
+    [TB_Factor].[FactorNameTH] AS [FactorNameTH], 
+    [TB_Factor].[FactorNameEN] AS [FactorNameEN]
+    FROM [dbo].[TB_Factor] AS [TB_Factor]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TB_FakeChoice" EntityType="Self.TB_FakeChoice" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TB_FakeChoice].[FakeChoiceId] AS [FakeChoiceId], 
+    [TB_FakeChoice].[FakeChoiceNameTH] AS [FakeChoiceNameTH], 
+    [TB_FakeChoice].[FakeChoiceNameEN] AS [FakeChoiceNameEN], 
+    [TB_FakeChoice].[FakeChoiceType] AS [FakeChoiceType], 
+    [TB_FakeChoice].[Status] AS [Status], 
+    [TB_FakeChoice].[UpdateDate] AS [UpdateDate], 
+    [TB_FakeChoice].[UpdateBy] AS [UpdateBy], 
+    [TB_FakeChoice].[Point] AS [Point]
+    FROM [dbo].[TB_FakeChoice] AS [TB_FakeChoice]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TB_LogHistory" EntityType="Self.TB_LogHistory" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TB_LogHistory].[MemberId] AS [MemberId], 
+    [TB_LogHistory].[LogType] AS [LogType], 
+    [TB_LogHistory].[LogText] AS [LogText], 
+    [TB_LogHistory].[CreatedDate] AS [CreatedDate], 
+    [TB_LogHistory].[Address] AS [Address]
+    FROM [dbo].[TB_LogHistory] AS [TB_LogHistory]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TB_Member" EntityType="Self.TB_Member" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TB_Member].[MemberId] AS [MemberId], 
+    [TB_Member].[MemberNameTH] AS [MemberNameTH], 
+    [TB_Member].[MemberLastNameTH] AS [MemberLastNameTH], 
+    [TB_Member].[MemberNameEN] AS [MemberNameEN], 
+    [TB_Member].[MemberLastNameEN] AS [MemberLastNameEN], 
+    [TB_Member].[MemberDOB] AS [MemberDOB], 
+    [TB_Member].[RegisterDate] AS [RegisterDate], 
+    [TB_Member].[LastAccess] AS [LastAccess], 
+    [TB_Member].[Status] AS [Status], 
+    [TB_Member].[Role] AS [Role], 
+    [TB_Member].[UserName] AS [UserName], 
+    [TB_Member].[Password] AS [Password], 
+    [TB_Member].[Email] AS [Email], 
+    [TB_Member].[Title] AS [Title], 
+    [TB_Member].[FailLogin] AS [FailLogin]
+    FROM [dbo].[TB_Member] AS [TB_Member]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TB_Question" EntityType="Self.TB_Question" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TB_Question].[QuestionId] AS [QuestionId], 
+    [TB_Question].[FactorId] AS [FactorId], 
+    [TB_Question].[SubFactorId] AS [SubFactorId], 
+    [TB_Question].[DataTH] AS [DataTH], 
+    [TB_Question].[DataEN] AS [DataEN], 
+    [TB_Question].[UpdatedDate] AS [UpdatedDate], 
+    [TB_Question].[QuestionStatus] AS [QuestionStatus], 
+    [TB_Question].[UpdatedBy] AS [UpdatedBy]
+    FROM [dbo].[TB_Question] AS [TB_Question]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TB_SubFactor" EntityType="Self.TB_SubFactor" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TB_SubFactor].[SubFactorId] AS [SubFactorId], 
+    [TB_SubFactor].[FactorId] AS [FactorId], 
+    [TB_SubFactor].[SubFactorNameTH] AS [SubFactorNameTH], 
+    [TB_SubFactor].[SubFactorNameEN] AS [SubFactorNameEN]
+    FROM [dbo].[TB_SubFactor] AS [TB_SubFactor]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SpiritModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="SpiritContext" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="SP_QIUD_EXAM">
+            <Parameter Name="Result" Mode="InOut" Type="Int32" />
+            <Parameter Name="TotalScore" Mode="InOut" Type="Int32" />
+            <Parameter Name="MemberId" Mode="In" Type="String" />
+            <Parameter Name="QuestionId" Mode="In" Type="Int32" />
+            <Parameter Name="QuestionOrder" Mode="In" Type="Int32" />
+            <Parameter Name="ChoiceId" Mode="In" Type="Int32" />
+            <Parameter Name="ChoiceType" Mode="In" Type="String" />
+            <Parameter Name="Point" Mode="In" Type="Int32" />
+            <Parameter Name="TimeUsed" Mode="In" Type="Decimal" />
+            <Parameter Name="ExamId" Mode="In" Type="Int32" />
+            <Parameter Name="Action" Mode="In" Type="String" />
+            <Parameter Name="IsFinal" Mode="In" Type="Int32" />
+            <Parameter Name="TestNo" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_I_AnswerSheet">
+            <Parameter Name="Result" Mode="InOut" Type="Int32" />
+            <Parameter Name="MemberId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_NEW_Member">
+            <Parameter Name="Result" Mode="InOut" Type="Int32" />
+            <Parameter Name="MemberId" Mode="In" Type="String" />
+            <Parameter Name="Action" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_U_PASSWORD_Member">
+            <Parameter Name="Result" Mode="InOut" Type="String" />
+            <Parameter Name="MemberId" Mode="In" Type="String" />
+            <Parameter Name="OldPassword" Mode="In" Type="String" />
+            <Parameter Name="NewPassword" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="TB_AnswerSheet" EntityType="SpiritModel.TB_AnswerSheet" />
+          <EntitySet Name="TB_ChoiceWG" EntityType="SpiritModel.TB_ChoiceWG" />
+          <EntitySet Name="TB_Exam" EntityType="SpiritModel.TB_Exam" />
+          <EntitySet Name="TB_ExamStat" EntityType="SpiritModel.TB_ExamStat" />
+          <EntitySet Name="TB_Factor" EntityType="SpiritModel.TB_Factor" />
+          <EntitySet Name="TB_FakeChoice" EntityType="SpiritModel.TB_FakeChoice" />
+          <EntitySet Name="TB_LogHistory" EntityType="SpiritModel.TB_LogHistory" />
+          <EntitySet Name="TB_Member" EntityType="SpiritModel.TB_Member" />
+          <EntitySet Name="TB_Question" EntityType="SpiritModel.TB_Question" />
+          <EntitySet Name="TB_SubFactor" EntityType="SpiritModel.TB_SubFactor" />
+          </EntityContainer>
+        <EntityType Name="TB_AnswerSheet">
+          <Key>
+            <PropertyRef Name="MemberId" />
+            <PropertyRef Name="QuestionId" />
+            <PropertyRef Name="QuestionOrder" />
+            <PropertyRef Name="ExamId" />
+            <PropertyRef Name="TestNo" />
+          </Key>
+          <Property Name="MemberId" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="QuestionId" Type="Int32" Nullable="false" />
+          <Property Name="QuestionOrder" Type="Int32" Nullable="false" />
+          <Property Name="ExamId" Type="Int32" Nullable="false" />
+          <Property Name="TestNo" Type="Int32" Nullable="false" />
+          <Property Name="ChoiceId" Type="Int32" />
+          <Property Name="Point" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="TimeUsed" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateedDate" Type="DateTime" Precision="3" />
+          <Property Name="ChoiceType" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="FakeChoiceId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="TB_ChoiceWG">
+          <Key>
+            <PropertyRef Name="ChoiceId" />
+            <PropertyRef Name="QuestionId" />
+            <PropertyRef Name="ChoiceNameTH" />
+            <PropertyRef Name="ChoiceNameEN" />
+            <PropertyRef Name="Point" />
+          </Key>
+          <Property Name="ChoiceId" Type="Int32" Nullable="false" />
+          <Property Name="QuestionId" Type="Int32" Nullable="false" />
+          <Property Name="ChoiceNameTH" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ChoiceNameEN" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Point" Type="Int32" Nullable="false" />
+          <Property Name="ChoiceType" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="TB_Exam">
+          <Key>
+            <PropertyRef Name="ExamId" />
+            <PropertyRef Name="AddDate" />
+            <PropertyRef Name="ExamStatus" />
+          </Key>
+          <Property Name="ExamId" Type="Int32" Nullable="false" />
+          <Property Name="PrefixName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TotalQuestion" Type="Int32" />
+          <Property Name="TotalScore" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="TotalTime" Type="Int32" />
+          <Property Name="ExamDesc" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="AddDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ExamStatus" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="Remind1" Type="Int32" />
+          <Property Name="Remind2" Type="Int32" />
+        </EntityType>
+        <EntityType Name="TB_ExamStat">
+          <Key>
+            <PropertyRef Name="MemberId" />
+            <PropertyRef Name="TestNo" />
+            <PropertyRef Name="ExamId" />
+          </Key>
+          <Property Name="MemberId" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="TestNo" Type="Int32" Nullable="false" />
+          <Property Name="ExamId" Type="Int32" Nullable="false" />
+          <Property Name="ScoreSet" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="ScoreGet" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="TimeUsed" Type="Int32" />
+          <Property Name="TimeSet" Type="Int32" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="FinishedDate" Type="DateTime" Precision="3" />
+          <Property Name="PageNo" Type="Int32" />
+          <Property Name="TestStatus" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="ExamAccessTimes" Type="Int32" />
+        </EntityType>
+        <EntityType Name="TB_Factor">
+          <Key>
+            <PropertyRef Name="FactorId" />
+            <PropertyRef Name="FactorNameTH" />
+            <PropertyRef Name="FactorNameEN" />
+          </Key>
+          <Property Name="FactorId" Type="Int32" Nullable="false" />
+          <Property Name="FactorNameTH" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="FactorNameEN" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TB_FakeChoice">
+          <Key>
+            <PropertyRef Name="FakeChoiceId" />
+            <PropertyRef Name="FakeChoiceNameTH" />
+            <PropertyRef Name="FakeChoiceNameEN" />
+            <PropertyRef Name="FakeChoiceType" />
+            <PropertyRef Name="Status" />
+          </Key>
+          <Property Name="FakeChoiceId" Type="Int32" Nullable="false" />
+          <Property Name="FakeChoiceNameTH" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="FakeChoiceNameEN" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="FakeChoiceType" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Point" Type="Int32" />
+        </EntityType>
+        <EntityType Name="TB_LogHistory">
+          <Key>
+            <PropertyRef Name="MemberId" />
+            <PropertyRef Name="LogType" />
+            <PropertyRef Name="LogText" />
+            <PropertyRef Name="CreatedDate" />
+          </Key>
+          <Property Name="MemberId" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LogType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LogText" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TB_Member">
+          <Key>
+            <PropertyRef Name="MemberId" />
+            <PropertyRef Name="MemberNameTH" />
+            <PropertyRef Name="MemberLastNameTH" />
+            <PropertyRef Name="MemberNameEN" />
+            <PropertyRef Name="MemberLastNameEN" />
+            <PropertyRef Name="RegisterDate" />
+            <PropertyRef Name="Status" />
+            <PropertyRef Name="FailLogin" />
+          </Key>
+          <Property Name="MemberId" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="true" />
+          <Property Name="MemberNameTH" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="MemberLastNameTH" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="MemberNameEN" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="MemberLastNameEN" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="MemberDOB" Type="DateTime" Precision="0" />
+          <Property Name="RegisterDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastAccess" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FailLogin" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TB_Question">
+          <Key>
+            <PropertyRef Name="QuestionId" />
+          </Key>
+          <Property Name="QuestionId" Type="Int32" Nullable="false" />
+          <Property Name="FactorId" Type="Int32" />
+          <Property Name="SubFactorId" Type="Int32" />
+          <Property Name="DataTH" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="DataEN" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="QuestionStatus" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TB_SubFactor">
+          <Key>
+            <PropertyRef Name="SubFactorId" />
+            <PropertyRef Name="FactorId" />
+            <PropertyRef Name="SubFactorNameTH" />
+            <PropertyRef Name="SubFactorNameEN" />
+          </Key>
+          <Property Name="SubFactorId" Type="Int32" Nullable="false" />
+          <Property Name="FactorId" Type="Int32" Nullable="false" />
+          <Property Name="SubFactorNameTH" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="SubFactorNameEN" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SpiritModelStoreContainer" CdmEntityContainer="SpiritContext">
+          <FunctionImportMapping FunctionImportName="SP_QIUD_EXAM" FunctionName="SpiritModel.Store.SP_QIUD_EXAM" />
+          <FunctionImportMapping FunctionImportName="SP_I_AnswerSheet" FunctionName="SpiritModel.Store.SP_I_AnswerSheet" />
+          <FunctionImportMapping FunctionImportName="SP_NEW_Member" FunctionName="SpiritModel.Store.SP_NEW_Member" />
+          <FunctionImportMapping FunctionImportName="SP_U_PASSWORD_Member" FunctionName="SpiritModel.Store.SP_U_PASSWORD_Member" />
+          <EntitySetMapping Name="TB_AnswerSheet">
+            <EntityTypeMapping TypeName="SpiritModel.TB_AnswerSheet">
+              <MappingFragment StoreEntitySet="TB_AnswerSheet">
+                <ScalarProperty Name="FakeChoiceId" ColumnName="FakeChoiceId" />
+                <ScalarProperty Name="ChoiceType" ColumnName="ChoiceType" />
+                <ScalarProperty Name="UpdateedDate" ColumnName="UpdateedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="TimeUsed" ColumnName="TimeUsed" />
+                <ScalarProperty Name="Point" ColumnName="Point" />
+                <ScalarProperty Name="ChoiceId" ColumnName="ChoiceId" />
+                <ScalarProperty Name="TestNo" ColumnName="TestNo" />
+                <ScalarProperty Name="ExamId" ColumnName="ExamId" />
+                <ScalarProperty Name="QuestionOrder" ColumnName="QuestionOrder" />
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+                <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_ChoiceWG">
+            <EntityTypeMapping TypeName="SpiritModel.TB_ChoiceWG">
+              <MappingFragment StoreEntitySet="TB_ChoiceWG">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ChoiceType" ColumnName="ChoiceType" />
+                <ScalarProperty Name="Point" ColumnName="Point" />
+                <ScalarProperty Name="ChoiceNameEN" ColumnName="ChoiceNameEN" />
+                <ScalarProperty Name="ChoiceNameTH" ColumnName="ChoiceNameTH" />
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+                <ScalarProperty Name="ChoiceId" ColumnName="ChoiceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_Exam">
+            <EntityTypeMapping TypeName="SpiritModel.TB_Exam">
+              <MappingFragment StoreEntitySet="TB_Exam">
+                <ScalarProperty Name="Remind2" ColumnName="Remind2" />
+                <ScalarProperty Name="Remind1" ColumnName="Remind1" />
+                <ScalarProperty Name="ExamStatus" ColumnName="ExamStatus" />
+                <ScalarProperty Name="AddDate" ColumnName="AddDate" />
+                <ScalarProperty Name="ExamDesc" ColumnName="ExamDesc" />
+                <ScalarProperty Name="TotalTime" ColumnName="TotalTime" />
+                <ScalarProperty Name="TotalScore" ColumnName="TotalScore" />
+                <ScalarProperty Name="TotalQuestion" ColumnName="TotalQuestion" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="PrefixName" ColumnName="PrefixName" />
+                <ScalarProperty Name="ExamId" ColumnName="ExamId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_ExamStat">
+            <EntityTypeMapping TypeName="SpiritModel.TB_ExamStat">
+              <MappingFragment StoreEntitySet="TB_ExamStat">
+                <ScalarProperty Name="ExamAccessTimes" ColumnName="ExamAccessTimes" />
+                <ScalarProperty Name="TestStatus" ColumnName="TestStatus" />
+                <ScalarProperty Name="PageNo" ColumnName="PageNo" />
+                <ScalarProperty Name="FinishedDate" ColumnName="FinishedDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="TimeSet" ColumnName="TimeSet" />
+                <ScalarProperty Name="TimeUsed" ColumnName="TimeUsed" />
+                <ScalarProperty Name="ScoreGet" ColumnName="ScoreGet" />
+                <ScalarProperty Name="ScoreSet" ColumnName="ScoreSet" />
+                <ScalarProperty Name="ExamId" ColumnName="ExamId" />
+                <ScalarProperty Name="TestNo" ColumnName="TestNo" />
+                <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_Factor">
+            <EntityTypeMapping TypeName="SpiritModel.TB_Factor">
+              <MappingFragment StoreEntitySet="TB_Factor">
+                <ScalarProperty Name="FactorNameEN" ColumnName="FactorNameEN" />
+                <ScalarProperty Name="FactorNameTH" ColumnName="FactorNameTH" />
+                <ScalarProperty Name="FactorId" ColumnName="FactorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_FakeChoice">
+            <EntityTypeMapping TypeName="SpiritModel.TB_FakeChoice">
+              <MappingFragment StoreEntitySet="TB_FakeChoice">
+                <ScalarProperty Name="Point" ColumnName="Point" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="FakeChoiceType" ColumnName="FakeChoiceType" />
+                <ScalarProperty Name="FakeChoiceNameEN" ColumnName="FakeChoiceNameEN" />
+                <ScalarProperty Name="FakeChoiceNameTH" ColumnName="FakeChoiceNameTH" />
+                <ScalarProperty Name="FakeChoiceId" ColumnName="FakeChoiceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_LogHistory">
+            <EntityTypeMapping TypeName="SpiritModel.TB_LogHistory">
+              <MappingFragment StoreEntitySet="TB_LogHistory">
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="LogText" ColumnName="LogText" />
+                <ScalarProperty Name="LogType" ColumnName="LogType" />
+                <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_Member">
+            <EntityTypeMapping TypeName="SpiritModel.TB_Member">
+              <MappingFragment StoreEntitySet="TB_Member">
+                <ScalarProperty Name="FailLogin" ColumnName="FailLogin" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="LastAccess" ColumnName="LastAccess" />
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+                <ScalarProperty Name="MemberDOB" ColumnName="MemberDOB" />
+                <ScalarProperty Name="MemberLastNameEN" ColumnName="MemberLastNameEN" />
+                <ScalarProperty Name="MemberNameEN" ColumnName="MemberNameEN" />
+                <ScalarProperty Name="MemberLastNameTH" ColumnName="MemberLastNameTH" />
+                <ScalarProperty Name="MemberNameTH" ColumnName="MemberNameTH" />
+                <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_Question">
+            <EntityTypeMapping TypeName="SpiritModel.TB_Question">
+              <MappingFragment StoreEntitySet="TB_Question">
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="QuestionStatus" ColumnName="QuestionStatus" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="DataEN" ColumnName="DataEN" />
+                <ScalarProperty Name="DataTH" ColumnName="DataTH" />
+                <ScalarProperty Name="SubFactorId" ColumnName="SubFactorId" />
+                <ScalarProperty Name="FactorId" ColumnName="FactorId" />
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_SubFactor">
+            <EntityTypeMapping TypeName="SpiritModel.TB_SubFactor">
+              <MappingFragment StoreEntitySet="TB_SubFactor">
+                <ScalarProperty Name="SubFactorNameEN" ColumnName="SubFactorNameEN" />
+                <ScalarProperty Name="SubFactorNameTH" ColumnName="SubFactorNameTH" />
+                <ScalarProperty Name="FactorId" ColumnName="FactorId" />
+                <ScalarProperty Name="SubFactorId" ColumnName="SubFactorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

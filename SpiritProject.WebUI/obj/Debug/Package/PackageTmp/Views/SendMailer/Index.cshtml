@@ -1,0 +1,53 @@
+﻿@model SpiritProject.Common.MailModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="login-container">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="hpanel">
+                <div class="panel-body">
+                    @using (Html.BeginForm("Index", "SendMailer", FormMethod.Post, new { id = "ForgotPasswordForm" }))
+                    {
+                        @Html.ValidationSummary()
+                        <div class="form-group">
+                            <label class="control-label" for="mail">Enter Your E-Mail</label>
+                            <input type="text" placeholder="example@gmail.com" title="Please enter you mail" required value="" name="mail" id="mail" class="form-control" onkeypress="return isEngCharOrNumberKey(event);">
+                            @*<p>@Html.TextBoxFor(m => m.To, new { placeholder = "example@gmail.com", title = "Please enter you mail", required = true, value = "", name = "mail", id = "mail" })</p>*@
+                        </div>
+
+                        <div class="form-group">
+                            <button class="btn btn-success btn-block">Confirm</button>
+                        </div>
+
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section scripts{
+    <script>
+        $(function () {
+            $('#ForgotPasswordForm').validate({
+                rules: {
+
+                    Mail: {
+                        required: true,
+                        email: true
+                    }
+                },
+                messages: {
+                    Password: {
+
+                        Mail: {
+                            required: "Please provide a email",
+                        }
+                    }
+                });
+        })
+    </script>
+}

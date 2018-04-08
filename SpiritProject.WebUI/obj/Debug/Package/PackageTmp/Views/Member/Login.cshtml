@@ -1,0 +1,116 @@
+﻿@{
+    Layout = "~/Views/Shared/_Login_Member.cshtml";
+    ViewBag.Title = "Login";
+}
+
+<div class="login-container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="text-center m-b-md">
+                <div class="te-logo">
+                    <span>
+                        <img src="~/Content/img/logo.png" style="width:  120px;" />
+                    </span>
+                </div>
+                <br />
+                <h1>Welcome to Personality Assessment</h1>
+            </div>
+            <div class="hpanel">
+                <div class="panel-body">
+                    @using (Html.BeginForm("Login", "Member", FormMethod.Post, new { id = "loginForm", style = "display: block;", autocomplete = "off" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-group  text-center">
+                            <label class="small text-danger">@ViewBag.Message</label>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="username">CitizenId</label>
+                            <input type="text" placeholder="01234567890123" title="Please enter you CitizenId" required value="" name="username" id="username" class="form-control" onkeypress="return isEngCharOrNumberKey(event);">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="password">Password</label>
+                            <input type="password" title="Please enter your password" placeholder="******" required value="" name="password" id="password" class="form-control" onkeypress="return isEngCharOrNumberKey(event);">
+                        </div>
+                        <div class="form-group">
+                            <a class="help-block small" style="color: #00a5b7;" onclick="window.location='@Url.Action("MemberForm","SendMailer")'">Forgot Password </a>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-success btn-block" type="button" id="loginBtn">Login</button>
+                        </div>
+                        <div class="form-group">
+                            <a class="help-block small text-right" onclick="window.location='@Url.Action("Register","Member")'">First Time Login  ?</a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+            $("#username").focus();
+            $("#username").blur(function () {
+                $(this).val($.trim($(this).val()));
+            });
+
+            BrowserDetection();
+
+        
+
+            var validator = $('#loginForm').validate({
+                rules: {
+                    username: {
+                        required: true
+                    },
+                    password: {
+                        required: true,
+                        minlength: 8
+                    }
+                },
+                messages: {
+                    username: {
+                        required: "Please provide a Username"
+                    },
+                    password: {
+                        required: "Please provide a password",
+                        minlength: "Your password must be at least 8 characters long"
+                    }
+                }
+            });
+
+
+            $('#loginBtn').on('click', function () {
+                if ($('#loginForm').valid()) {
+                    $('#loginForm').submit();
+                }
+
+            })
+        });
+        function BrowserDetection() {
+            if (navigator.userAgent.search("MSIE") >= 0) {
+                alert("Recommened Chrome");
+                //code goes here
+            }
+            //else if (navigator.userAgent.search("Chrome") >= 0) {
+            //    //code goes here
+            //    alert("Chrome");
+            //}
+            else if (navigator.userAgent.search("Firefox") >= 0) {
+                alert("Recommened Chrome");
+                //code goes here
+            }
+            else if (navigator.userAgent.search("Safari") >= 0 && navigator.userAgent.search("Chrome") < 0) {
+                //code goes here
+                alert("Recommened Chrome");
+            }
+            else if (navigator.userAgent.search("Opera") >= 0) {
+                //code goes here
+                alert("Recommened Chrome");
+            }
+        }
+    </script>
+}

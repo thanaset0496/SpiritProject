@@ -1,0 +1,147 @@
+﻿@{
+    //Layout = "~/Views/Shared/_Login_Exam.cshtml";
+    ViewBag.Title = "ExamOverView";
+}
+<div class="content">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="hpanel">
+                <div class="panel-heading">
+                    <div class="panel-tools">
+                        <a class="showhide"><i class="fa fa-chevron-up"></i></a>
+                        @*<a class="closebox"><i class="fa fa-times"></i></a>*@
+                    </div>
+                    Question List
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table cellpadding="1" cellspacing="1" class="table">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Thai</th>
+                                    <th>English</th>
+                                    <th>Factor</th>
+                                    <th>Subfactor</th>
+                                    <th>Updated Date</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>คำถามข้อที่ 1</td>
+                                    <td>Question Number  1</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>12/12/2017</td>
+                                    <td><a href="@Url.Action("UpdateQuestion","Question",new { id = 1 })"><i class="fa fa-edit"></i></a></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>คำถามข้อที่ 2</td>
+                                    <td>Question Number  2</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>12/12/2017</td>
+                                    <td><a href="@Url.Action("UpdateQuestion","Question",new { id = 2 })"><i class="fa fa-edit"></i></a></td>
+
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>คำถามข้อที่ 3</td>
+                                    <td>Question Number  3</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>12/12/2017</td>
+                                    <td><a href="@Url.Action("UpdateQuestion","Question",new { id = 3 })"><i class="fa fa-edit"></i></a></td>
+
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>คำถามข้อที่ 4</td>
+                                    <td>Question Number  4</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>12/12/2017</td>
+                                    <td><a href="@Url.Action("UpdateQuestion","Question",new { id = 4 })"><i class="fa fa-edit"></i></a></td>
+
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>คำถามข้อที่ 5</td>
+                                    <td>Question Number  5</td>
+                                    <td>1</td>
+                                    <td>1</i></td>
+                                    <td>12/12/2017</td>
+                                    <td><a href="@Url.Action("UpdateQuestion","Question",new { id = 5 })"><i class="fa fa-edit"></i></a></td>
+
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>คำถามข้อที่ 6</td>
+                                    <td>Question Number  6</td>
+                                    <td>1</td>
+                                    <td>1</i></td>
+                                    <td>12/12/2017</td>
+                                    <td><a href="@Url.Action("UpdateQuestion","Question",new { id = 6 })"><i class="fa fa-edit"></i></a></td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <div class="panel-footer">
+                    Table - 6 rows
+                </div>
+            </div>
+        </div>
+        @*<div class="col-lg-5">
+            <div class="hpanel">
+                <div class="panel-heading">
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table cellpadding="1" cellspacing="1" class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Thai</th>
+                                    <th>English</th>
+                                    <th>Type</th>
+                                    <th>Updated Date</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>คำถามที่ 1 ตัวเลือกที่ 1</td>
+                                    <td>Question 1 Choice 1</td>
+                                    <td>W</td>
+                                    <td>12/12/2017</td>
+                                    <td><a href="@Url.Action("UpdateChoice","Choice",new { id = 1 })"><i class="fa fa-edit"></i></a></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>คำถามที่ 2 ตัวเลือกที่ 2</td>
+                                    <td>Question 2 Choice 2</td>
+                                    <td>G</td>
+                                    <td>12/12/2017</td>
+                                    <td><a href="@Url.Action("UpdateChoice","Choice",new { id = 2 })"><i class="fa fa-edit"></i></a></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <div class="panel-footer">
+                    Table - 5 rows
+                </div>
+            </div>
+        </div>*@
+    </div>
+</div>

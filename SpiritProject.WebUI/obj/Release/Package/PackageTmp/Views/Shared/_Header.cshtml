@@ -1,0 +1,233 @@
+﻿@helper langSelector()
+{
+string curLang = "en"; ;
+if (this.ViewContext.RouteData.Values["culture"] != null)
+{
+    curLang = this.ViewContext.RouteData.Values["culture"].ToString();
+}
+
+var enabledLangsList = SpiritProject.WebUI.Utilities.LocalizationHelper.GetSupportedLocales();
+
+var targetPath = string.Format("/{0}/{1}{2}",
+    ViewContext.RouteData.Values["controller"].ToString(),
+    ViewContext.RouteData.Values["action"].ToString(),
+    Request.Url.Query);
+var hostRoot = string.Format("{0}://{1}", Request.Url.Scheme, Request.Url.Authority);
+
+var subdomainCount = Request.Url.AbsolutePath.Split('/');
+var subdomain = "";
+if (subdomainCount.Count() > 1)
+{
+    subdomain = Request.Url.AbsolutePath.Split('/')[1];
+}
+// var targetUrlMask = string.Format("{0}/{{0}}/{1}", hostRoot, targetPath);
+
+    <li class="dropdown special" style="margin-left: 15px;">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            @{if (curLang == "en")
+                {
+                    <i class='flag-icon flag-icon-us'></i>
+                }
+                else if (curLang == "th")
+                {
+                    <i class='flag-icon flag-icon-th'></i>
+                }
+            }
+            <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu lang-selector">
+            @foreach (var lang in enabledLangsList)
+            {
+                if (lang == "en")
+                {
+                    <li>
+                        <a href="@Url.Content(string.Format("~/{0}{1}", lang, targetPath))">
+                            <i class='flag-icon flag-icon-us'></i><label class="text-right">&nbsp; US</label>
+                        </a>
+                    </li>
+                }
+                else if (lang == "th")
+                {
+                    <li>
+                        <a href="@Url.Content(string.Format("~/{0}{1}", lang, targetPath))">
+                            <i class='flag-icon flag-icon-th'></i><label class="text-right">&nbsp; TH</label>
+                        </a>
+                    </li>
+                }
+            }
+        </ul>
+    </li>
+}
+
+<div class="color-line">
+</div>
+<div id="logo" class="light-version">
+    <span>
+        <img src="~/Content/img/logo.png" style="width:  120px;" />
+    </span>
+</div>
+<nav role="navigation">
+    @*<div class="header-link hide-menu"><i class="fa fa-bars"></i></div>*@
+
+    <div class="small-logo">
+        <span>
+            <img src="~/Content/img/logo.png" style="width:  60px;" />
+        </span>
+    </div>
+    @{ var session = (SpiritProject.Common.MemberModel)Session["CurrentUser"];
+        if (session != null)
+        {
+            if (session.Role == "1")
+            //if ("1" == "1")
+            {
+                <div class="mobile-menu">
+                    <button type="button" class="navbar-toggle mobile-menu-toggle" data-toggle="collapse" data-target="#mobile-collapse">
+                        <i class="fa fa-chevron-down"></i>
+                    </button>
+                    <div class="collapse mobile-navbar" id="mobile-collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="@Url.Action("Index", "Admin")" data-placement="bottom" data-toggle="tooltip" title="@Resources.Resource.menu_Home">
+                                    <i class="fa fa-home">@Resources.Resource.menu_Home</i>
+                                </a>
+                            <li class="dropdown">
+                                <a href="@Url.Action("AdminList", "Admin")" data-placement="bottom" data-toggle="tooltip" title="@Resources.Resource.menu_NewAdmin">
+                                    <i class="fa fa-user-plus">@Resources.Resource.menu_NewAdmin</i>
+                                </a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="@Url.Action("MemberList", "Admin")" data-placement="bottom" data-toggle="tooltip" title="@Resources.Resource.menu_ExaminerList">
+                                    <i class="fa fa-group">@Resources.Resource.menu_ExaminerList</i>
+                                </a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="@Url.Action("Analytics", "Admin")" data-placement="bottom" data-toggle="tooltip" title="@Resources.Resource.menu_Analytics">
+                                    <i class="fa fa-bar-chart-o">@Resources.Resource.menu_Analytics</i>
+                                </a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="@Url.Action("QuestionView", "Admin")" data-placement="bottom" data-toggle="tooltip" title="@Resources.Resource.menu_QuestionReview">
+                                    <i class="fa fa-file-text">@Resources.Resource.menu_QuestionReview</i>
+                                </a>
+                            </li>
+
+                            <li class="dropdown">
+                                <a href="@Url.Action("Config", "Admin")" data-placement="bottom" data-toggle="tooltip" title="@Resources.Resource.menu_Config">
+                                    <i class="fa fa-gears">@Resources.Resource.menu_Config</i>
+                                </a>
+                            </li>
+                            <li class="dropdown">
+                                @langSelector()
+                            </li>
+                            <li class="dropdown">
+                                <a href="@Url.Action("LogOut", "Admin")" data-placement="bottom" data-toggle="tooltip" title="@Resources.Resource.menu_logOut">
+                                    <i class="fa fa-sign-out">@Resources.Resource.menu_logOut</i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="navbar-right">
+                    <ul class="nav navbar-nav no-borders">
+                        <li class="dropdown">
+                            <a href="@Url.Action("Index", "Admin")" data-placement="bottom" data-toggle="tooltip" title="@Resources.Resource.menu_Home">
+                                <i class="fa fa-home"></i>
+                            </a>
+                        <li class="dropdown">
+                            <a href="@Url.Action("AdminList", "Admin")" data-placement="bottom" data-toggle="tooltip" title="@Resources.Resource.menu_NewAdmin">
+                                <i class="fa fa-user-plus"></i>
+                            </a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="@Url.Action("MemberList", "Admin")" data-placement="bottom" data-toggle="tooltip" title="@Resources.Resource.menu_ExaminerList">
+                                <i class="fa fa-group"></i>
+                            </a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="@Url.Action("Analytics", "Admin")" data-placement="bottom" data-toggle="tooltip" title="@Resources.Resource.menu_Analytics">
+                                <i class="fa fa-bar-chart-o"></i>
+                            </a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="@Url.Action("QuestionView", "Admin")" data-placement="bottom" data-toggle="tooltip" title="@Resources.Resource.menu_QuestionReview.">
+                                <i class="fa fa-file-text"></i>
+                            </a>
+                        </li>
+
+                        <li class="dropdown">
+                            <a href="@Url.Action("Config", "Admin")" data-placement="bottom" data-toggle="tooltip" title="@Resources.Resource.menu_Config">
+                                <i class="fa fa-gears"></i>
+                            </a>
+                        </li>
+                        <li class="dropdown">
+                            @langSelector()
+                        </li>
+                        <li class="dropdown">
+                            <a href="@Url.Action("LogOut", "Admin")" data-placement="bottom" data-toggle="tooltip" title="@Resources.Resource.menu_logOut">
+                                <i class="fa fa-sign-out"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            }
+            else
+            {
+                <div class="navbar-right">
+                    <ul class="nav navbar-nav no-borders">
+                        <li class="dropdown">
+                            <div id="parent">
+                                <div id="child">
+                                    Citizen ID :  @RuntimeVariable.CurrentUser.MemberId
+                                </div>
+                            </div>
+                        </li>
+                        <li class="dropdown">
+                            <a href="@Url.Action("ChangePassword", "Member")" data-placement="bottom" data-toggle="tooltip" title="@Resources.Resource.menu_Config">
+                                <i class="fa fa-gears"></i>
+                            </a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="@Url.Action("LogOut", "Member")" data-placement="bottom" data-toggle="tooltip" title="@Resources.Resource.menu_logOut">
+                                <i class="fa fa-sign-out"></i>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+                <div class="mobile-menu">
+                    <button type="button" class="navbar-toggle mobile-menu-toggle" data-toggle="collapse" data-target="#mobile-collapse">
+                        <i class="fa fa-chevron-down"></i>
+                    </button>
+                    <div class="collapse mobile-navbar" id="mobile-collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <div id="parent">
+                                    <div id="child">
+                                        Citizen ID :  @RuntimeVariable.CurrentUser.MemberId
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="dropdown">
+                                <a href="@Url.Action("ChangePassword", "Member")" data-placement="bottom" data-toggle="tooltip" title="@Resources.Resource.menu_Config">
+                                    <i class="fa fa-gears">@Resources.Resource.menu_Config</i>
+                                </a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="@Url.Action("LogOut", "Member")" data-placement="bottom" data-toggle="tooltip" title="@Resources.Resource.menu_logOut">
+                                    <i class="fa fa-sign-out">@Resources.Resource.menu_logOut</i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            }
+        }
+        //else
+        //{
+        //    Response.Redirect(Url.Action("Login", "Member"));
+        //}
+    }
+ 
+</nav>
+

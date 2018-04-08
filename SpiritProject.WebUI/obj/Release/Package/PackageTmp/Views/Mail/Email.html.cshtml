@@ -1,0 +1,38 @@
+﻿@model SpiritProject.Common.MemberModel
+@{
+    Layout = "";
+
+    string type = (string)ViewBag.TypeEmail;
+}
+@if (type == "FirsTimeLogin")
+{
+    <label>เรียนคุณ</label> @Model.FullName <br />
+    <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ขอต้อนรับเข้าสู่ระบบ Personality Assessment</label><br>
+    <label>คุณได้เข้าสู่ระบบเป็นครั้งแรกดังนั้นการเข้าสู่ระบบขอให้ผู้ใช้งานนำรหัสผ่านดังนี้ @Model.Password ใช้สำหรับ </label><br />
+        <label>เข้าสู่ระบบในครั้งแรกและระบบจะแนะนำให้ผู้ใช้งานเปลี่ยนเป็นรหัสผ่านที่ใช้สำหรับใช้งานจริงต่อไป </label><br />
+}
+else
+{
+    <label>เรียนคุณ</label> @Model.FullName<br />
+    <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ขอต้อนรับเข้าสู่ระบบ Personality Assessment</label><br>
+    <label>ระบบ Personality Assessment สร้างรหัสการใช้งานใหม่ ให้ผู้ใช้งาน แล้วดังนี้ @Model.Password</label><br>
+    <label>ผู้ใช้งานสามารถนำรหัสผานดังนี้ไปใช้สำหรับเข้าระบบได้ทันที และทางระบบนำให้ท่านเปลี่ยนเป็นรหัสที่</label><br>
+    <label>ต้องการใช้งานต่อไปภายในระบบได้ตามต้องการ</label>
+        <br>
+}
+
+
+<p>
+    Dear A
+</p>
+<p>
+    Thank you for visiting our site.
+    <br />
+    Hope you enjoyed reading the content.
+</p>
+
+<p>
+    Thank again!
+</p>
+Sincerely,
+<br />

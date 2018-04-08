@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "UpdateChoice";
+}
+<div class="content">
+
+    <div class="question-container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="hpanel">
+                    <div class="panel-body">
+                        <form action="#" method="post" id="loginForm">
+                            <div class="row">
+                                <div class="form-group col-lg-12">
+                                    <label>คำถาม</label>
+                                    <input type="text" value="คำถามข้อที่ @ViewBag.Id" id="" class="form-control" name="" readonly="readonly">
+                                </div>
+                                <div class="form-group col-lg-12">
+                                    <label>Thai</label>
+                                    <input type="text" value="คำถามข้อที่ @ViewBag.Id ตัวเลือกที่ 1 " id="" class="form-control" name="">
+                                </div>
+                                <div class="form-group col-lg-12">
+                                    <label>English</label>
+                                    <input type="text" value="Question Number  @ViewBag.Id Choice 1" id="ChoiceNameEN" class="form-control" name="">
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label>Type</label>
+                                    <input type="text" value="W" id="ChoiceType" class="form-control" name="" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button class="btn btn-success">Save</button>
+                                <button class="btn btn-default">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <strong>HOMER</strong> - AngularJS Responsive WebApp <br /> 2015 Copyright Company Name
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,163 @@
+﻿@model SpiritProject.Common.MailModel
+@{
+    Layout = "~/Views/Shared/_Login_Member.cshtml";
+}
+
+
+<div class="login-container">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="hpanel">
+                <div class="panel-body">
+                    <form id="ForgotPasswordForm"  method="post">
+                        @Html.AntiForgeryToken()
+
+
+                        <div class="form-group">
+                            <label class="control-label" for="mail">Enter Your Citizen ID</label>
+                            <input type="text" placeholder="01234567890123" title="Please enter you Citizen ID" required value="" maxlength="13" name="Username" id="Username" class="form-control" onkeypress="return isEngCharOrNumberKey(event);">
+                        </div>
+
+                        <div class="form-group text-center">
+                            @*<button class="btn btn-success btn-block" type="button" id="SendMailAdmin">Confirm</button>*@
+                            <input name="SendMailMember" id="SendMailMember" type="button" class="btn w-xs btn-success" value="Confirm">&nbsp;&nbsp;
+                            <input name="Back" id="Back" onclick="window.history.go(-1); return false;" type="button" class="btn w-xs btn-primary" value="Back">&nbsp;&nbsp;
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal fade hmodal-warning" id="myModalRegisterResponse" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="color-line"></div>
+
+            <div class="modal-body">
+                <h4 class="modal-title">
+                    ระบบได้ทำการส่ง Password ไปยัง E-mail :
+                    <label id="Email"></label>
+                    ที่ท่านใช้ลงทะเบียนเอาไว้เเล้ว
+                </h4>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(function () {
+
+            $('form input').on('keypress', function (e) {
+                if (e.which === 13) {
+                    var form = $('#ForgotPasswordForm');
+                    var token = $('input[name="__RequestVerificationToken"]', form).val();
+                    if (form.valid()) {
+                        blockUI();
+                        var Username = $('#Username').val();
+
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("MemberFormSubmit", "SendMailer")',
+                            data: {
+                                __RequestVerificationToken: token,
+                                Username: Username
+
+                            },
+                            datatype: "JSON",
+                            success: function (respose) {
+
+                                if (respose.result == 'success') {
+                                    $('#Email').text(respose.Email);
+                                    $('#myModalRegisterResponse').modal('show');
+                                    $('#myModalRegisterResponse').on('hidden.bs.modal', function () {
+                                        // do something…
+                                        window.location = "@Url.Action("Login", "Member")";
+                                    })
+                                    // window.location = "@Url.Action("Login", "Member")";
+                                    unblockUI();
+
+                                }
+                                else {
+                                    message("error", respose.result);
+                                    unblockUI();
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+
+            $('#ForgotPasswordForm').validate({
+                rules: {
+
+                    Mail: {
+                        required: true,
+                        email: true
+                    }
+                },
+                messages: {
+                    Password: {
+
+                        Mail: {
+                            required: "Please provide a email"
+                        }
+                    }
+                }
+            });
+
+            $('#SendMailMember').on('click', function () {
+                var form = $('#ForgotPasswordForm');
+                var token = $('input[name="__RequestVerificationToken"]', form).val();
+                if (form.valid()) {
+                    blockUI();
+                    var Username = $('#Username').val();
+
+                    $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("MemberFormSubmit", "SendMailer")',
+                    data: {
+                        __RequestVerificationToken: token,
+                        Username: Username
+
+                    },
+                    datatype: "JSON",
+                    success: function (respose) {
+
+                        if (respose.result == 'success') {
+                            $('#Email').text(respose.Email);
+                            $('#myModalRegisterResponse').modal('show');
+                            $('#myModalRegisterResponse').on('hidden.bs.modal', function () {
+                                // do something…
+                                window.location = "@Url.Action("Login", "Member")";
+                            })
+                             // window.location = "@Url.Action("Login", "Member")";
+                            unblockUI();
+
+                        }
+                        else {
+                            message("error", respose.result);
+                            unblockUI();
+                        }
+                    }
+                    });
+                }
+
+            });
+
+            $('#Username').on('input', function () {
+                this.value = this.value.replace(/[^0-9]/g, '');
+
+            });
+
+    })
+    </script>
+}

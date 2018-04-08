@@ -1,0 +1,140 @@
+﻿@{
+    //Layout = "~/Views/Shared/_Login_Exam.cshtml";
+    ViewBag.Title = "ExamIntro";
+    string curLang = "en";
+    if (this.ViewContext.RouteData.Values["culture"] != null)
+    {
+        curLang = this.ViewContext.RouteData.Values["culture"].ToString();
+    }
+}
+
+@using (Html.BeginForm("DoExam", "Exam", FormMethod.Post, new { id = "login-form", style = "display: block;" }))
+{
+    @Html.Hidden("ExamId", (int)ViewBag.ExamId, new { id = "ExamId" })
+    @Html.Hidden("TestNo", (int)ViewBag.TestNo, new { id = "TestNo" })
+    <div class="content">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div class="hpanel">
+                <div class="panel-heading hbuilt">
+
+                    <div>
+                        <h2>
+                            <strong><i class="fa fa-2x fa-commenting-o"></i>@Resources.Resource.lbl_ExamIntro</strong>
+                        </h2>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    @if (curLang == "th")
+                    {
+                        <div class="hpanel">
+                            <div class="panel-heading hbuilt">
+
+                                <div>
+
+                                    <i class="fa fa-2x fa-hand-o-right"></i>แบบทดสอบชุดนี้ มีจำนวน @ViewBag.TotalQuestion ข้อ ใช้เวลาในการทำไม่เกิน @ViewBag.TimeSet นาที
+
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div><i class="fa fa-circle-o"></i>  เลือกคำตอบที่ตรงกับคุณมากที่สุด</div>
+                                <div><i class="fa fa-clock-o"></i>  ถ้าเวลาหมดก่อนที่คุณจะทำแบบทดสอบเสร็จ ถือว่าการทำแบบทดสอบชุดนี้เสร็จสิ้นแล้ว</div>
+
+                            </div>
+                        </div>
+                        <div class="hpanel">
+                            <div class="panel-heading hbuilt">
+
+                                <div>
+
+                                    <i class="fa fa-2x fa-hand-o-right"></i>หากเกิดปัญหาระหว่างทำแบบทดสอบ ให้กดปิดหน้าจอแล้ว Log in เข้าสู่ระบบอีกครั้ง
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="hpanel">
+                            <div class="panel-heading hbuilt">
+
+                                <div>
+
+                                    <i class="fa fa-2x fa-hand-o-right"></i>[ENG]แบบทดสอบชุดนี้ มีจำนวน @ViewBag.TotalQuestion ข้อ ใช้เวลาในการทำไม่เกิน @ViewBag.TimeSet นาที
+
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div><i class="fa fa-circle-o"></i>  [ENG]เลือกคำตอบที่ตรงกับคุณมากที่สุด</div>
+                                <div><i class="fa fa-clock-o"></i>  [ENG]ถ้าเวลาหมดก่อนที่คุณจะทำแบบทดสอบเสร็จ ถือว่าการทำแบบทดสอบชุดนี้เสร็จสิ้นแล้ว</div>
+
+                            </div>
+                        </div>
+                        <div class="hpanel">
+                            <div class="panel-heading hbuilt">
+
+                                <div>
+
+                                    <i class="fa fa-2x fa-hand-o-right"></i>[ENG]หากเกิดปัญหาระหว่างทำแบบทดสอบ ให้กดปิดหน้าจอแล้ว Log in เข้าสู่ระบบอีกครั้ง
+
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+
+                    <div class="form-group">
+                        <div align="center">
+                            <input name="Back" id="Back" onclick="window.history.go(-1); return false;" type="button" class="btn w-xs btn-primary" value=" << @Resources.Resource.btn_Home">&nbsp;&nbsp;
+                            <input name="Submit2" type="submit" class="btn w-xs btn-info" value="  @Resources.Resource.btn_BeginExam >>  " onclick="">
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+
+    </div>
+
+}
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="color-line"></div>
+            <div class="modal-header text-center">
+                <h4 class="modal-title">โปรดทำข้อสอบให้เสร็จภายใน 5 วัน</h4>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+    {
+    <script>
+        $(function () {
+            $('.footer').hide();
+            $('#myModal').modal('toggle');
+
+            $('#Back').on('click', function () {
+                window.location ='@Url.Action("Index","Dashboard")'
+            })
+
+
+            //$('#reloadLang').on('click', function () {
+            //    debugger
+            //    $('#reloadLang').hide();
+            //})
+            $('#reloadLang').click();
+
+        });
+
+
+    </script>
+}

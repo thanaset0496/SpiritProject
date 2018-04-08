@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Personality Test</title>
+
+
+    @*<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>*@
+
+    <!-- Add local styles, mostly for plugins css file -->
+    @if (IsSectionDefined("Styles"))
+    {@RenderSection("Styles", required: false)}
+
+    <!-- Primary HOMER style -->
+    @Styles.Render("~/bundles/font-awesome/css")
+    @Styles.Render("~/bundles/animate/css")
+    @Styles.Render("~/bundles/bootstrap/css")
+    @Styles.Render("~/bundles/peicon7stroke/css")
+    @Styles.Render("~/bundles/toastr/css")
+    @Styles.Render("~/bundles/homer/css")
+    @Styles.Render("~/bundles/flags/css")
+    <style>
+        body {
+            background: url('/PTT_Prescreen_Test/Content/img/PTT-10_admin.png') no-repeat;
+            background-size: 100%;
+        }
+    </style>
+</head>
+<body class="blank">
+
+    <!-- Simple splash screen-->
+    <div class="splash"> <div class="color-line"></div><div class="splash-title"><h1>Homer - Responsive Admin Theme</h1><p>Special Admin Theme for small and medium webapp with very clean and aesthetic style and feel. </p><div class="spinner"> <div class="rect1"></div> <div class="rect2"></div> <div class="rect3"></div> <div class="rect4"></div> <div class="rect5"></div> </div> </div> </div>
+    <!--[if lt IE 7]>
+    <p class="alert alert-danger">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <div class="color-line"></div>
+
+    @*<div class="back-link">
+            <a href="@Url.Action("Index", "Dashboard")" class="btn btn-primary">Back to Dashboard</a>@Resources.Resource.lbl_hello
+            <div style="float:right">
+                <select class="selectpicker" data-width="fit">
+                    <option data-content='<span><img src="blank.gif" class="flag flag-us" /></span>'>English</option>
+                    <option data-content='<span><img src="blank.gif" class="flag flag-th" /></span>'> Thai</option>
+                </select>
+            </div>
+        </div>*@
+
+    <!-- Main view  -->
+    @RenderBody()
+
+    <!-- Section for main scripts render -->
+    @Scripts.Render("~/bundles/jquery/js")
+    @Scripts.Render("~/bundles/bootstrap/js")
+    @Scripts.Render("~/bundles/homer/js")
+    @Scripts.Render("~/bundles/toastr/js")
+    @Scripts.Render("~/bundles/validation/js")
+    <!-- Handler for local scripts -->
+    @RenderSection("scripts", required: false)
+    <script>
+        function message(type, msg) {
+            //Toastr options
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": true,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "200",
+                "hideDuration": "500",
+                "timeOut": "2500",
+                "extendedTimeOut": "500",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+
+            if (type.indexOf('info') >= 0) {
+                toastr.info(msg, 'Information');
+            }
+            else if (type.indexOf('warning') >= 0) {
+                toastr.warning(msg, 'Warning');
+            }
+            else if (type.indexOf('error') >= 0) {
+                toastr.error(msg, 'Error');
+            }
+            else {
+                toastr.success(msg, 'Information');
+            }
+        }
+    </script>
+</body>
+</html>

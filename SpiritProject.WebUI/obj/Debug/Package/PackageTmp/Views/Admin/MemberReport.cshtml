@@ -1,0 +1,439 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout_PopUp.cshtml";
+    ViewBag.Title = "Report";
+
+    string curLang = "en"; ;
+    if (this.ViewContext.RouteData.Values["culture"] != null)
+    {
+        curLang = this.ViewContext.RouteData.Values["culture"].ToString();
+    }
+
+    var jss = new System.Web.Script.Serialization.JavaScriptSerializer();
+    var chartListJson = jss.Serialize(ViewBag.chartList);
+    var examNormJson = jss.Serialize(ViewBag.ExamNorm);
+
+    var stat = (SpiritProject.Common.ExamStatModel)ViewBag.User;
+    var MaxObj = (SpiritProject.Common.SummaryScoreModel)ViewBag.MaxObj;
+    var MinObj = (SpiritProject.Common.SummaryScoreModel)ViewBag.MinObj;
+}
+
+@model List<SpiritProject.Common.SummaryScoreModel>
+
+
+<div class="content">
+    @using (Html.BeginForm("PrintAllReport", "Admin", FormMethod.Post, new { id = "PrintReport" }))
+    {
+        @Html.Hidden("ExamId", (int)ViewBag.ExamId, new { id = "ExamId" })
+        @Html.Hidden("TestNo", (int)ViewBag.TestNo, new { id = "TestNo" })
+        @Html.Hidden("MemberId", (string)ViewBag.MemberId, new { id = "MemberId" })
+        @Html.Hidden("Radar", "", new { id = "Radar" })
+        @Html.Hidden("Bar", "", new { id = "Bar" })
+        @Html.Hidden("BarTotal", "", new { id = "BarTotal" })
+        <div class="row">
+            <div class="normalheader web-font" style="text-align:left">
+                <div class="hpanel" id="statExam">
+                    <div class="panel-body">
+                        <div class="row">
+
+                            <div class="col-lg-12 text-center m-t-md"><h2>@Resources.Resource.lbl_Mean</h2></div>
+                            <div class="form-group">
+                                <span>@Resources.Resource.lbl_FullName : @stat.MemberName</span>
+                                <span style="float:right">@Resources.Resource.lbl_TestTimes : @stat.TestNo</span>
+                            </div>
+                            <div class="form-group">
+                                <span>@Resources.Resource.lbl_CitizenId : @stat.MemberId</span>
+                                <span style="float:right">@Resources.Resource.lbl_TestDate : @stat.DisplayStartDate</span>
+                            </div>
+                            <div class="form-group">
+                                <span>@Resources.Resource.lbl_AccessTimes : @stat.ExamAccessTimes</span>
+                                <span style="float:right">@Resources.Resource.lbl_TimeUesd @stat.Minute:@stat.Second.ToString().PadLeft(2, '0') @Resources.Resource.lbl_Minute @Resources.Resource.lbl_From @stat.TimeSet<text>.00</text> @Resources.Resource.lbl_Minute</span>
+                            </div>
+
+
+
+
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="row">
+            <div class="panel-body">
+                @*    <div class="col-lg-6">
+                        <div class="hpanel">
+                            <div class="panel-heading">
+                                @Resources.Resource.lbl_Graph1
+                            </div>
+                            <div class="panel-body">
+                                <div>
+                                    <canvas id="radarChart" class="ReportCanvas" height="260"></canvas>
+                                    <img id="urlRadar" name="urlRadar" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                *@
+                <div class="col-lg-6">
+                    <div class="hpanel">
+                        <div class="panel-heading">
+                            @Resources.Resource.lbl_Graph1
+
+                        </div>
+                        <div class="panel-body">
+                            <div>
+                                <canvas id="barTotalChart" class="ReportCanvas" height="220"></canvas>
+                                <img id="urlBarTotal" name="urlBarTotal" />
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="hpanel">
+                        <div class="panel-heading">
+                            @Resources.Resource.lbl_Graph2
+
+                        </div>
+                        <div class="panel-body">
+                            <div>
+                                <canvas id="barChart" class="ReportCanvas" height="220"></canvas>
+                                <img id="urlBar" name="urlBar" />
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<div style="page-break-after: always;">Content before page breaks</div>*@
+
+        <div class="row">
+
+            <div class="hpanel">
+                <div class="panel-body ">
+
+                    <div class="row">
+                        <br />
+                        <table class="display table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th colspan="6" class="text-left">
+                                        <h4>
+                                            <strong>@Resources.Resource.lbl_Proportion</strong>
+                                            <br>
+                                            <small>@Resources.Resource.lbl_PortDone / @Resources.Resource.lbl_PortTotal</small>
+                                        </h4>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    @foreach (var summary in Model)
+                                    {
+
+                                        <th>@summary.FactorName</th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    @foreach (var summary in Model)
+                                    {
+                                        <td>@summary.DoneQuestion/@summary.TotalQuestion</td>
+                                    }
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    @*<div class="col-lg-12 text-center m-t-md"><h3>การแปลผลทดสอบ</h3></div>*@
+                    @*<div><h4><strong>การแปลผลทดสอบของผู้สอบ คือ  @MaxObj.FactorName</strong></h4> </div>
+                        <div><h4><strong>ระดับ : - </strong></h4> </div>
+                        <div><h4><strong>คะแนนผู้สอบ : @MaxObj.TotalScore</strong></h4> </div>
+                        <div><h4><strong>Norm :  - </strong></h4> </div>*@
+                    <table class="table table-bordered">
+                        <thead>
+
+                            <tr>
+                                <th colspan="4" class="text-center"><h4><strong>@Resources.Resource.lbl_Mean</strong></h4></th>
+                            </tr>
+                            <tr>
+                                <th>@Resources.Resource.lbl_Factor</th>
+                                <th>@Resources.Resource.lbl_Level</th>
+                                @*   <th>@Resources.Resource.lbl_Mean2</th>*@
+                                <th>@Resources.Resource.lbl_Mean3</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (var i = 0; i < Model.Count(); i++)
+                        {
+                        <tr>
+                            <td>
+                                @Model[i].FactorName
+
+                                @if (Model[i].Score == MaxObj.Score)
+                                    {
+                                    <i class="fa fa-circle fa-1 text-success"></i>
+                                    }
+                                    else if (Model[i].Score == MinObj.Score)
+                                    {
+                                    <i class="fa fa-circle fa-1 text-danger"></i>
+                                    }
+                                    @*else
+                                        {
+                                            <i class="fa fa-circle "></i>
+                                        }*@
+                                </td>
+                                <td>@Model[i].Level</td>
+                                <td>@Model[i].Mean</td>
+                            </tr>
+                        }
+
+                        </tbody>
+                    </table>
+
+                    <table class="table table-bordered">
+                        <thead>
+
+                            <tr>
+                                <th colspan="4" class="text-center"><h4><strong>@Resources.Resource.lbl_ResultScore</strong></h4></th>
+                            </tr>
+                       
+                        </thead>
+                        <tbody>
+                                <tr>
+                                    <td>
+                                        @((string)ViewBag.allMean)
+                                    </td>
+                                  
+                                </tr>
+
+                        </tbody>
+                    </table>
+
+                    <div class="text-center">
+                        <button class="btn btn-success" type="button" onclick="window.print()" id="print">Print</button>
+                        <button class="btn btn-success" type="button" id="downloadpdf">Print PDF</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+
+</div>
+
+<div id="show_img"></div>
+<div id="editor"></div>
+@section scripts{
+    @Scripts.Render("~/bundles/chartjs/js")
+    <script>
+
+        $(document).ready(function () {
+            $('#downloadpdf').on('click', function () {
+                //var radarData = $('#urlRadar').attr('src');
+                //$('#Radar').val(radarData);
+                var barData = $('#urlBar').attr('src');
+                $('#Bar').val(barData);
+
+                var barTotalData = $('#urlBarTotal').attr('src');
+                $('#BarTotal').val(barTotalData);
+
+                $('#PrintReport').submit();
+            })
+
+            var examData = @Html.Raw(Json.Encode(ViewBag.ExamNorm));
+            var arrayExamScore = [];
+            var arrayExamNorm = [];
+            var examScore = arrayExamScore.push(examData.Data.ExamScore);
+            var examNorm =  arrayExamNorm.push(examData.Data.ExamNorm);
+
+            var data = @Html.Raw(Json.Encode(ViewBag.chartList));
+            var arrayNames = [];
+            var arrayValues = [];
+            var arrayTotals = [];
+            var names = data.Data.items.map(function (t) { arrayNames.push(t.name); });
+            var value = data.Data.items.map(function (t) {  arrayValues.push(t.values); });
+            var totals = data.Data.items.map(function (t) { arrayTotals.push(t.totals); });
+
+                 @*var radarData = {
+                     labels: arrayNames,
+                     datasets: [
+                         {
+                             label: '@Resources.Resource.lbl_YourScore',
+                             backgroundColor: "rgba(98,203,49,0.4)",
+                             borderColor: "rgba(98,203,49,1)",
+                             pointBackgroundColor: "rgba(98,203,49,1)",
+                             pointBorderColor: "#fff",
+                             pointHoverBackgroundColor: "#fff",
+                             pointHoverBorderColor: "#62cb31",
+                             borderWidth: 1,
+                             data: arrayValues
+                         },
+                         {
+                             label: '@Resources.Resource.lbl_Norm',
+                             backgroundColor: "rgba(220,220,220,0.5)",
+                             borderColor: "rgba(220,220,220,0.8)",
+                             pointBackgroundColor: "rgba(220,220,220,0.75)",
+                             pointBorderColor: "#fff",
+                             pointHoverBackgroundColor: "#fff",
+                             pointHoverBorderColor: "#62cb31",
+                             borderWidth: 1,
+                             data: arrayTotals
+                         }
+                     ]
+                 };
+
+                 var radarOptions = {
+                     responsive: true,
+                     bezierCurve: false,
+                     animation: {
+                         onComplete: doneRadar
+                     },
+                     scale: {
+                         ticks: {
+                             beginAtZero: true,
+                             min: 0,
+                             max: 12
+                         }
+                     }
+                 };
+
+
+                 var ctx = document.getElementById("radarChart").getContext("2d");
+                 var myRadar = new Chart(ctx, { type: 'radar', data: radarData, options: radarOptions });*@
+
+
+
+                 var barTotalData = {
+                     labels: ["@Resources.Resource.lbl_Graph1"],
+                      datasets: [
+                          {
+                             label: '@Resources.Resource.lbl_YourScore',
+                              backgroundColor: "rgba(98,203,49,0.5)",
+                              borderColor: "rgba(98,203,49,0.8)",
+                              highlightFill: "rgba(98,203,49,0.75)",
+                              highlightStroke: "rgba(98,203,49,1)",
+                              borderWidth: 1,
+                              data: arrayExamScore
+                          },
+                          {
+                             label: '@Resources.Resource.lbl_Norm',
+                              backgroundColor: "rgba(220,220,220,0.5)",
+                              borderColor: "rgba(220,220,220,0.8)",
+                              highlightFill: "rgba(220,220,220,0.75)",
+                              highlightStroke: "rgba(220,220,220,1)",
+                              borderWidth: 1,
+                              data: arrayExamNorm
+                          }
+                      ]
+                  };
+
+                 var barTotalOptions = {
+                     responsive: true,
+                     bezierCurve: false,
+                     animation: {
+                         onComplete: doneBarTotal
+                     },
+                     scales: {
+                         yAxes: [{
+                             ticks: {
+                                 beginAtZero: true,
+                                 max:80
+                             }
+                         }]
+                     }
+                 };
+
+                 var ctx = document.getElementById("barTotalChart").getContext("2d");
+                 var myBarTotal = new Chart(ctx, { type: 'bar', data: barTotalData, options: barTotalOptions });
+
+                  var canvasBar = $("#barTotalChart").get(0);
+                  var dataURLBar = canvasBar.toDataURL();
+
+                  /**
+                   * Data for Bar chart
+                   */
+                 var barData = {
+                     labels: arrayNames,
+                      datasets: [
+                          {
+                             label: '@Resources.Resource.lbl_YourScore',
+                              backgroundColor: "rgba(98,203,49,0.5)",
+                              borderColor: "rgba(98,203,49,0.8)",
+                              highlightFill: "rgba(98,203,49,0.75)",
+                              highlightStroke: "rgba(98,203,49,1)",
+                              borderWidth: 1,
+                              data: arrayValues
+                          },
+                          {
+                             label: '@Resources.Resource.lbl_Norm',
+                              backgroundColor: "rgba(220,220,220,0.5)",
+                              borderColor: "rgba(220,220,220,0.8)",
+                              highlightFill: "rgba(220,220,220,0.75)",
+                              highlightStroke: "rgba(220,220,220,1)",
+                              borderWidth: 1,
+                              data: arrayTotals
+                          }
+                      ]
+                  };
+
+                 var barOptions = {
+                     responsive: true,
+                     bezierCurve: false,
+                     animation: {
+                         onComplete: doneBar
+                     },
+                     scales: {
+                         yAxes: [{
+                             ticks: {
+                                 beginAtZero: true,
+                                 max:12
+                             }
+                         }]
+                     }
+                 };
+
+                 var ctx = document.getElementById("barChart").getContext("2d");
+                 var myBar = new Chart(ctx, { type: 'bar', data: barData, options: barOptions });
+
+                  var canvasBar = $("#barChart").get(0);
+                  var dataURLBar = canvasBar.toDataURL();
+
+                  //var canvasRadar = $("#radarChart").get(0);
+                  //var dataURLRadar = canvasRadar.toDataURL();
+
+                  //function doneRadar() {
+
+                  //    var urlRadar = myRadar.toBase64Image();
+                  //    document.getElementById("urlRadar").src = urlRadar;
+                  //    $("#urlRadar").hide();
+                  //}
+
+                  function doneBar() {
+
+                      var urlBar = myBar.toBase64Image();
+                      document.getElementById("urlBar").src = urlBar;
+                      $("#urlBar").hide();
+                  }
+
+                  function doneBarTotal() {
+
+                      var urlBarTotal = myBarTotal.toBase64Image();
+                      document.getElementById("urlBarTotal").src = urlBarTotal;
+                      $("#urlBarTotal").hide();
+                  }
+          //  $("#show_img").append(dataURLRadar);
+
+
+        });
+
+        //download pdf form hidden canvas
+
+    </script>
+
+}

@@ -1,0 +1,114 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+    ViewBag.Title = "Analytics";
+    string curLang = "en"; ;
+    if (this.ViewContext.RouteData.Values["culture"] != null)
+    {
+        curLang = this.ViewContext.RouteData.Values["culture"].ToString();
+    }
+}
+
+<div class="content">
+
+    <div class="row">
+        <div class="col-lg-12 text-center m-t-md">
+            <h2>@Resources.Resource.lbl_AdminReportList</h2>
+
+            <small>@Resources.Resource.lbl_forAdmin</small>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="hpanel">
+                <div class="panel-heading">
+                    <div class="panel-tools">
+                    </div>
+                    &nbsp;
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table id="Examhist" class="display table table-bordered" width="100%">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">@Resources.Resource.lbl_CitizenId</th>
+                                    <th class="text-center">@Resources.Resource.lbl_FullName</th>
+                                    <th class="text-center">@Resources.Resource.lbl_ExamName</th>
+                                    <th class="text-center">@Resources.Resource.lbl_Times</th>
+                                    <th class="text-center">@Resources.Resource.lbl_StartDate</th>
+                                    @*<th>Status Complete</th>*@
+                                    <th class="text-center">@Resources.Resource.lbl_Report</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+
+
+
+            var table = $("#Examhist").DataTable({
+                "processing": true,
+                "serverSide": true,
+                "searching": true,
+                "destroy": true,
+                "paging": true,
+                ajax: {
+                    url: "@Url.Action("GetExamHist", "Admin")",
+                    type: "POST"
+                },
+                columns: [
+                    { "data": "MemberId" },
+                    { "data": "FullName" },
+                    { "data": "ExamDesc" },
+                    { "data": "TestNo", className: "dt-body-right"},
+                    { "data": "DisplayStartDate", className: "dt-body-center"},
+                    //{ "data": "Status" },
+                    {
+
+                        "defaultContent": "<a><i class='fa fa-area-chart text-danger'></i></a>",
+                        "orderable": false,
+                        "targets": -1, className: "dt-body-center"
+                    }
+                ]
+                ,
+                dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
+                "lengthMenu": [[10, 25, 50, 2000], [10, 25, 50, "All"]],
+                buttons: [
+                    //{ extend: 'copy', className: 'btn-sm' },
+                    { extend: 'csv', title: 'Analytics', className: 'btn-sm' },
+                    { extend: 'pdf', title: 'Analytics', className: 'btn-sm' },
+                    { extend: 'print', className: 'btn-sm' }
+                ],
+                'language': '@curLang' == 'en' ? languageEN : languageTH,
+                "scrollX": false
+            });
+
+            $('#Examhist tbody').on('click', 'a', function () {
+                var data = table.row($(this).parents('tr')).data();
+                popup_report(data.ExamId, data.TestNo, data.MemberId);
+            });
+        });
+
+        function popup_report(ExamId, TestNo, MemberId) {
+
+            var spec_option = "toolbar=no,menubar=no,scrollbars=yes,height=500,width=900,resizable=no";
+
+        var popUpWindow = window.open('@Url.Action("MemberReport", "Admin")?ExamId=' + ExamId
+            + "&TestNo=" + TestNo
+            + "&MemberId=" + MemberId
+            , "dataitem", spec_option);
+    }
+
+    </script>
+}

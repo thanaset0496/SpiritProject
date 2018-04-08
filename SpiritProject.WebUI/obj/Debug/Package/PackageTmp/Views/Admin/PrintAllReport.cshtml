@@ -1,0 +1,205 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout_PopUp.cshtml";
+    ViewBag.Title = "Report";
+
+    var stat = (SpiritProject.Common.ExamStatModel)ViewBag.User;
+    var MaxObj = (SpiritProject.Common.SummaryScoreModel)ViewBag.MaxObj;
+    var MinObj = (SpiritProject.Common.SummaryScoreModel)ViewBag.MinObj;
+}
+
+@model List<SpiritProject.Common.SummaryScoreModel>
+
+
+<div class="content">
+    <div class="row">
+        <div class="normalheader web-font" style="text-align:left">
+            <div class="hpanel" id="statExam">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12 text-center m-t-md"><h2>@Resources.Resource.lbl_Mean</h2></div>
+
+                        <div class="form-group">
+                            <span>@Resources.Resource.lbl_FullName : @stat.MemberName</span>
+                            <span style="float:right">@Resources.Resource.lbl_TestTimes : @stat.TestNo</span>
+                        </div>
+                        <div class="form-group">
+                            <span>@Resources.Resource.lbl_CitizenId : @stat.MemberId</span>
+                            <span style="float:right">@Resources.Resource.lbl_TestDate : @stat.DisplayStartDate</span>
+                        </div>
+                        <div class="form-group">
+                            <span>@Resources.Resource.lbl_AccessTimes : @stat.ExamAccessTimes</span>
+                            <span style="float:right">@Resources.Resource.lbl_TimeUesd @stat.Minute:@stat.Second.ToString().PadLeft(2, '0') @Resources.Resource.lbl_Minute @Resources.Resource.lbl_From @stat.TimeSet<text>.00</text> @Resources.Resource.lbl_Minute</span>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="row">
+        <div class="panel-body">
+            @*<div class="col-lg-6">
+                <div class="hpanel">
+                    <div class="panel-heading">
+                        @Resources.Resource.lbl_Graph1
+                    </div>
+                    <div class="panel-body text-center">
+                        <div>
+                            <img id="urlRadar" height="380" width="600" src="@ViewBag.Radar" />
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+            <div class="col-lg-6">
+            <div class="hpanel">
+                <div class="panel-heading">
+                    @Resources.Resource.lbl_Graph1
+                </div>
+                <div class="panel-body text-center">
+                    <div>
+                        <img id="urlBarTotal" height="380" width="600" src="@ViewBag.BarTotal" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <div class="col-lg-6">
+                <div class="hpanel">
+                    <div class="panel-heading">
+                        @Resources.Resource.lbl_Graph2
+
+                    </div>
+                    <div class="panel-body">
+                        <div>
+                            <img id="urlBar" height="380" width="600" src="@ViewBag.Bar" />
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*<div style="page-break-after: always;"></div>*@
+
+    <div class="row">
+
+        <div class="hpanel">
+
+            <div class="panel-body ">
+                <div class="row">
+                    <br />
+                    <table class="display table table-bordered">
+                        <thead>
+                            <tr>
+                                <th colspan="6" class="text-left">
+                                    <h4>
+                                        <strong>@Resources.Resource.lbl_Proportion</strong>
+                                        <br>
+                                        <small>@Resources.Resource.lbl_PortDone/@Resources.Resource.lbl_PortTotal</small>
+                                    </h4>
+                                </th>
+                            </tr>
+                            <tr>
+                                @foreach (var summary in Model)
+                                {
+
+                                    <th>@summary.FactorName</th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                @foreach (var summary in Model)
+                                {
+                                    <td>@summary.DoneQuestion/@summary.TotalQuestion</td>
+                                }
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        @*<div class="col-lg-12 text-center m-t-md"><h3>การแปลผลทดสอบ</h3></div>*@
+        @*<div><h4><strong>การแปลผลทดสอบของผู้สอบ คือ  @MaxObj.FactorName</strong></h4> </div>
+            <div><h4><strong>ระดับ : - </strong></h4> </div>
+            <div><h4><strong>คะแนนผู้สอบ : @MaxObj.TotalScore</strong></h4> </div>
+            <div><h4><strong>Norm :  - </strong></h4> </div>*@
+
+        <div class="hpanel">
+            <div class="panel-body ">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th colspan="4" class="text-center"><h4><strong>@Resources.Resource.lbl_Mean</strong></h4></th>
+                        </tr>
+                        <tr>
+                            <th>@Resources.Resource.lbl_Factor</th>
+                            <th>@Resources.Resource.lbl_Level</th>
+                            <th>@Resources.Resource.lbl_Mean3</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (var i = 0; i < Model.Count(); i++)
+                        {
+                            <tr>
+                                <td>
+                                    @Model[i].FactorName
+
+                                    @if (Model[i].Score == MaxObj.Score)
+                                    {
+                                        <i class="fa fa-circle text-success"></i>
+                                    }
+                                    else if (Model[i].Score == MinObj.Score)
+                                    {
+                                        <i class="fa fa-circle text-danger"></i>
+                                    }
+                                    @*else
+                                        {
+                                            <i class="fa fa-circle "></i>
+                                        }*@
+                                </td>
+                                <td>@Model[i].Level</td>
+                                <td>@Model[i].Mean</td>
+                            </tr>
+
+                        }
+
+
+
+
+                    </tbody>
+                </table>
+
+                <table class="table table-bordered">
+                    <thead>
+
+                        <tr>
+                            <th colspan="4" class="text-center"><h4><strong>@Resources.Resource.lbl_ResultScore</strong></h4></th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                @((string)ViewBag.allMean)
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div id="show_img"></div>
+<div id="editor"></div>
+
